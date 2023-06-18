@@ -1,11 +1,12 @@
 .navbar{
-    display:none;
     height: 36px;
     display: flex;
     justify-content: flex-end;
     gap: 20px;
     padding: 10px;
     align-items: center;
+    display:none;
+    
 }
 .login-user{
     height: 40px;
