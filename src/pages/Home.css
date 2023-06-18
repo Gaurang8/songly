@@ -1,0 +1,13 @@
+.homepage {
+    display: flex;
+}
+.sidebar {
+    background-color: #262626;
+    height: 100vh;
+    color: #ddd;
+    flex: 1 0 20%;
+}
+.body{
+    background-color: rgb(48, 48, 48);
+    flex: 1 1 80%;
+}
