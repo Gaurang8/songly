@@ -1,4 +1,5 @@
 .navbar{
+    display:none;
     height: 36px;
     display: flex;
     justify-content: flex-end;
