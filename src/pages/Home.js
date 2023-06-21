@@ -1,7 +1,6 @@
 import React from "react";
 import SideBar from "../components/SideBar";
 import Body from "../components/Body";
-import Footer from "../components/Footer";
 import './Home.css'
 
 function Home() {
@@ -12,7 +11,6 @@ function Home() {
       </div>
       <div className="body">
         <Body />
-        <Footer />
       </div>
     </div>
   );

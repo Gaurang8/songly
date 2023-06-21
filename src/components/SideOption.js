@@ -1,5 +1,5 @@
 import React from 'react'
-import './sideoption.css'
+import './css/sideoption.css'
 
 function SideOption({Icon , title}) {
 

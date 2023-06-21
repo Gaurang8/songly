@@ -1,5 +1,5 @@
 import React from "react";
-import "./sidebar.css";
+import "./css/sidebar.css";
 import logo from "../logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
@@ -8,7 +8,7 @@ import SideOption from "./SideOption";
 
 function SideBar() {
   return (
-    <div className="sidebar">
+    <div className="sidebar-i">
       <div className="sidebar-logo">
         <img src={logo} alt="logo" height={"100%"} />
         <h2>Musicly</h2>

@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/material/Avatar';
-import './navbar.css'
+import './css/navbar.css'
 
 
 function NavBar() {
