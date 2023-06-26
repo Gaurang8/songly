@@ -11,8 +11,8 @@ function Body() {
     <div>
       <NavBar />
       <div className="slide-container">
-        {list.map((element) => {
-          return <Slider title={element} />;
+        {list.map((element,index) => {
+          return <Slider key={element} title={element} offcet={index}/>;
         })}
       </div>
 
