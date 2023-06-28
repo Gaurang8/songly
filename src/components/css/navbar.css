@@ -3,8 +3,9 @@
     display: flex;
     justify-content: flex-end;
     gap: 20px;
-    padding: 10px;
+    padding: 10px 10px 20px;
     align-items: center;
+     box-shadow: 1px 0px 2px rgba(255, 255, 255, 0.1);
 }
 .login-user{
     height: 40px;
@@ -75,4 +76,17 @@
 .input-search:hover > .input-icon {
 
     color: black;
+}
+
+@media only screen and (max-width:580px) {
+    .input-search:hover
+    .input-field{
+        width: 130px;
+        opacity: 1;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .upgrade {
+        display: none;
+    }
 }

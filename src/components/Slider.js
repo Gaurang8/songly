@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import img from "../logo.png";
-import "./css/slider.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {Keyboard} from 'swiper';
+import 'swiper/css/keyboard';
 import "swiper/css";
+import "./css/slider.css";
+
+
 
 // backend
 
 const client = "62b91c8cfc9f4a329c60ff1966be9d3d";
 const secret = "a45d808d3dc24ab29859cc509c4edb2b";
+
+const url = "https://api.spotify.com/v1/browse/categories?country=IN&limit=40";
 
 function Slider(props) {
   const [token, setToken] = useState("");
@@ -46,10 +52,10 @@ function Slider(props) {
   }, [token]);
 
   useEffect(() => {
-    const getPlaylist = async (token) => {
+    const getPlaylist = async (token,url) => {
       try {
-        const result = await fetch(
-          `https://api.spotify.com/v1/browse/categories?country=IN&limit=40`,
+        // console.log(url)
+        const result = await fetch(url,
           {
             method: "GET",
             headers: {
@@ -66,7 +72,7 @@ function Slider(props) {
     };
 
     if (token !== "") {
-      getPlaylist(token);
+      getPlaylist(token,url);
     }
   }, [token]);
 
@@ -113,17 +119,17 @@ function Slider(props) {
       <h3 className="slide-heading">{props.title}</h3>
       <Swiper
         spaceBetween={35}
+        scrollbar={{ draggable: true }}
+        modules={[ Keyboard]}
         slidesPerView={2}
-        navigation
-        onSlideChange={() => console.log("slide change")}
         breakpoints={{
-          540: {
+          300: {
             slidesPerView: 3,
-            spaceBetween: 15,
+            spaceBetween: 30,
           },
-          600: {
+          440: {
             slidesPerView: 4,
-            spaceBetween: 20,
+            spaceBetween: 30,
           },
           768: {
             slidesPerView: 5,
@@ -139,7 +145,10 @@ function Slider(props) {
         className="slider-container"
       >
         {renderSlides()}
+      
       </Swiper>
+
+      {console.log(window.innerWidth)}
     </>
   );
 }

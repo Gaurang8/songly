@@ -1,8 +1,10 @@
 .slider-container{
     display: flex;
-    padding: 10px;
     gap: 10px;
-    width: calc(80vw - 20px);
+    padding: 7px;
+    width: calc(80vw - 15px);
+    margin: 0;
+    box-sizing: border-box;
 }
 .slide-heading{
     margin-top: 50px;
@@ -19,16 +21,28 @@
     max-height: 125px;
     border-radius: 5px;
     background-color: rgb(255, 146, 255);
+    aspect-ratio: 1;
+    object-fit: cover;
 }
 
 .slider-item p{
     font-size: 14px;
     overflow: hidden;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    overflow:hidden;
+    text-wrap:nowrap;
+
 }
 .slider-item p:last-child{
     font-size: 10px;
-    overflow:hidden;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: #bbb;
+}
+
+
+@media only screen and (max-width:580px) {
+    .slider-container{
+        width: 100%
+    }
+    
 }
