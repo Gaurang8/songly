@@ -8,7 +8,7 @@ function Body() {
   const list = ["trending", "weekly-top", "all time favorite"];
 
   return (
-    <div>
+    <div className="body-container">
       <NavBar />
       <div className="slide-container">
         {list.map((element,index) => {

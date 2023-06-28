@@ -4,3 +4,6 @@
     border: none;
     margin-block: 70px 0;
 }
+.body-container{
+    overflow-x: hidden;
+}
