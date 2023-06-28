@@ -1,0 +1,92 @@
+.navbar{
+    height: 36px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 10px 10px 20px;
+    align-items: center;
+     box-shadow: 1px 0px 2px rgba(255, 255, 255, 0.1);
+}
+.login-user{
+    height: 40px;
+}
+.primary-btn{
+    background-color: rgb(16, 16, 16);
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+}
+.primary-btn:hover{
+    background-color: rgb(24,24,24);
+}
+.secondary-btn{
+    background-color: rgb(255,255,255);
+    color: black;
+    padding: 10px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+}
+.secondary-btn:hover{
+    background-color: #eee;
+}
+
+.input-field{
+    width: 0;
+    border: none;
+    opacity: 0;
+}
+
+.input-field:focus{
+    outline: none;
+}
+
+.input-search {
+    background-color:transparent ;
+    border-radius: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+.input-search > .input-icon {
+
+    width: 30px;
+    color: white;
+}
+.input-search:hover
+.input-field{
+    width: 150px;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+
+.input-search:hover {
+    background-color:white ;
+    border-radius: 15px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left:  10px;
+}
+
+.input-search:hover > .input-icon {
+
+    color: black;
+}
+
+@media only screen and (max-width:580px) {
+    .input-search:hover
+    .input-field{
+        width: 130px;
+        opacity: 1;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .upgrade {
+        display: none;
+    }
+}
