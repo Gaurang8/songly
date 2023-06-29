@@ -33,14 +33,19 @@
     font-size:14px;
     overflow:hidden;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* text-wrap:nowrap; */
+    line-height: 20px;
+    height:40px;
     overflow:hidden;
-    text-wrap:nowrap;
+
 }
 
 .slider-item p:last-child{
     font-size: 10px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: #bbb;
+    line-height: 16px;
+    height: 16px;
 }
 
 @media only screen and (max-width:580px) {
