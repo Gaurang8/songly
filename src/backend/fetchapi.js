@@ -23,7 +23,7 @@ const fetchToken = async () => {
     const accessToken = responseData.access_token;
     return accessToken;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -38,7 +38,7 @@ const getApiData = async (token, url) => {
     const responseData = await result.json();
     return responseData;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 

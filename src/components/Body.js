@@ -1,19 +1,24 @@
 import React from "react";
 import "./css/body.css";
 import NavBar from "./NavBar";
-import Slider from "./Slider";
 import Footer from "./Footer";
+import PlaylistList from "./slides/PlaylistList";
+import SongList from "./slides/SongList";
+import  NewReleases  from "./slides/NewReleases";
 
 function Body() {
-  const list = ["trending", "weekly-top", "all time favorite"];
 
   return (
     <div className="body-container">
-      <NavBar />
+      <NavBar/>
       <div className="slide-container">
-        {list.map((element,index) => {
-          return <Slider key={element} title={element} offcet={index}/>;
-        })}
+       
+
+  <NewReleases title="New Release" url="https://api.spotify.com/v1/browse/new-releases?country=IN&limit=20"/>
+        <PlaylistList title="Playlist" url="https://api.spotify.com/v1/browse/categories/0JQ5DAqbMKFHCxg5H5PtqW/playlists?country=IN&limit=20"/>
+        <SongList title="Bollywood Songs" url="https://api.spotify.com/v1/playlists/37i9dQZF1DX0XUfTFmNBRM/tracks"/>
+      
+      
       </div>
 
       <hr className="bottom-rural" />
