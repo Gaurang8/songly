@@ -25,6 +25,7 @@ function NewReleases({ title, url }) {
       getApiData(token, url)
         .then((apiData) => {
           setnewRelease(apiData);
+          console.log(apiData)
         })
         .catch((err) => {
           console.log("api cant fetched");

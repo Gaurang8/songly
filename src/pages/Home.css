@@ -8,7 +8,6 @@
     flex: 1 0 20%;
     min-width: 200px;
     width: 20%;
-
 }
 .body{
     background-color: rgb(48, 48, 48);
@@ -38,10 +37,23 @@
         width: 70%;
         z-index: 100;
         position: fixed;
+        animation-name: fade ;
+        animation-duration: 0.15s ;
+        animation-timing-function: normal;
 
     }
     .navbar-toggle {
         display: block;
+      }
+
+      @keyframes fade {
+        from{
+            left: -100%;
+        }
+        to{
+            left: 0;
+        }
+        
       }
     
 }

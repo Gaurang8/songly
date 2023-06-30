@@ -24,6 +24,7 @@ function SongList({title, url}) {
     const getData = () => {
         getApiData(token, url).then( apiData => {
         setsongData(apiData);
+        console.log(apiData)
         }).catch (err => {
         console.log("api cant fetched");
       })
@@ -43,6 +44,7 @@ function SongList({title, url}) {
           item.id = element.track.id;
           item.name = element.track.name;
           item.img = element.track.album.images[1].url;
+          item.play = element.track.preview_url || "not";
           return item;
         });
         setData(newData);

@@ -24,6 +24,7 @@ function PlaylistList({title, url}) {
     const getData = () => {
         getApiData(token, url).then( apiData => {
         setPlaylistData(apiData);
+        console.log('dsds',apiData)
         }).catch (err => {
         console.log("api cant fetched");
       })

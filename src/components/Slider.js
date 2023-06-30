@@ -1,12 +1,23 @@
-import React from "react";
+import React , {useRef} from "react";
 import img from "../logo.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import "swiper/css/keyboard";
 import "swiper/css";
 import "./css/slider.css";
 
-function Slider({ title, data }) {
+function Slider({ title, data })
+ {
+  const audioRef = useRef(null);
+
+  const handlePlay = (previewUrl) => {
+    if (previewUrl) {
+      audioRef.current.src = previewUrl;
+      audioRef.current.play();
+    }
+  };
+
   const renderData = () => {
     const slides = [];
     if (data) {
@@ -16,15 +27,19 @@ function Slider({ title, data }) {
 
       
       data.map((element,index) => {
+     
+        if(!element.play || ( element.play && element.play!== "not")){
         slides.push(
           <SwiperSlide key={index}>
             <div className="slider-item">
               <img src={element?.img || img} alt="img" width="100%" />
               <p>{element?.name || "unknown"}</p>
               <p>{element?.id || "unknown"}</p>
+             {element.play && <div className="play-btn"  onClick={() => handlePlay(element.play)}><PlayArrowIcon className="play-btn-icon"/></div> }
             </div>
+            <audio ref={audioRef} controls style={{ display: "none" }} />
           </SwiperSlide>
-        );
+        );}
       });
     }
     return slides;
@@ -51,8 +66,11 @@ function Slider({ title, data }) {
             slidesPerView: 5,
           },
           876: {
-            slidesPerView: 7,
+            slidesPerView: 6,
           },
+          1162:{
+            slidesPerView:7
+          }
         }}
         keyboard={{
           enabled: true,
