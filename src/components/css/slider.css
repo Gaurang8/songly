@@ -22,8 +22,8 @@
 }
 
 .slider-container img {
-    max-width: 125px;
-    max-height: 125px;
+    max-width: 150px;
+    max-height: 150px;
     border-radius: 5px;
     background-color: rgb(255, 146, 255);
     aspect-ratio: 1;
