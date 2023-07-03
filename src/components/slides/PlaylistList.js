@@ -45,6 +45,7 @@ function PlaylistList({title, url}) {
           item.id = element.id;
           item.name = element.name;
           item.img = element.images[0].url;
+          item.type = "playlist";
           return item;
         });
         setData(newData);

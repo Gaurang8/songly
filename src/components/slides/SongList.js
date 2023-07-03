@@ -45,6 +45,7 @@ function SongList({title, url}) {
           item.name = element.track.name;
           item.img = element.track.album.images[1].url;
           item.play = element.track.preview_url || "not";
+          item.type = "song";
           return item;
         });
         setData(newData);

@@ -6,8 +6,8 @@
     font-size: 30px;
     padding: 10px;
 }
-.social-accounts-link:hover{
-    transform: scale(1.1);
+.social-accounts-link .s-a-l-i:hover{
+    transform: scale(0.9);
 }
 .footer-text{
     text-align: center;

@@ -43,6 +43,7 @@ function NewReleases({ title, url }) {
           item.id = element.id;
           item.name = element.name;
           item.img = element.images[1].url;
+          item.type = "album";
           return item;
         });
         setData(newData);

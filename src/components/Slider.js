@@ -6,6 +6,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import "swiper/css/keyboard";
 import "swiper/css";
 import "./css/slider.css";
+import {Link} from "react-router-dom"
 
 function Slider({ title, data })
  {
@@ -32,10 +33,10 @@ function Slider({ title, data })
         slides.push(
           <SwiperSlide key={index}>
             <div className="slider-item">
-              <img src={element?.img || img} alt="img" width="100%" />
+              <Link to={`/song/${element.id}/${element.type}`}> <img src={element?.img || img} alt="img" width="100%" /></Link>
               <p>{element?.name || "unknown"}</p>
               <p>{element?.id || "unknown"}</p>
-             {element.play && <div className="play-btn"  onClick={() => handlePlay(element.play)}><PlayArrowIcon className="play-btn-icon"/></div> }
+             {element.play && <div className="play-btn"  onClick={() => handlePlay(element.preview_url)}><PlayArrowIcon className="play-btn-icon"/></div> }
             </div>
             <audio ref={audioRef} controls style={{ display: "none" }} />
           </SwiperSlide>

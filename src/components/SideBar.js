@@ -4,6 +4,7 @@ import logo from "../logo.png";
 import HomeIcon from "@mui/icons-material/Home";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Link } from "react-router-dom";
 
 import SideOption from "./SideOption";
 
@@ -17,9 +18,15 @@ function SideBar() {
         </div>
 
         <div className="sidebar_option">
-          <SideOption Icon={HomeIcon} title={"Home"} />
+          <Link to="/">
+            <SideOption Icon={HomeIcon} title={"Home"} />
+          </Link>
+          <Link to="/">
           <SideOption Icon={FavoriteIcon} title={"Favorites"} />
+          </Link>
+          <Link to="/">
           <SideOption Icon={PlaylistAddIcon} title={"Playlist"} />
+          </Link>
         </div>
 
         <div className="sidebar_sub">
@@ -27,7 +34,6 @@ function SideBar() {
           <SideOption title={"party song"} /> <SideOption title={"90's song"} />
         </div>
       </div>
-     
     </>
   );
 }

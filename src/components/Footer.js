@@ -9,9 +9,9 @@ function Footer() {
   return (
     <>
       <div className="social-accounts-link">
-        <InstagramIcon/>
-        <YouTubeIcon/>
-        <MailIcon/>
+        <InstagramIcon className="s-a-l-i"/>
+        <YouTubeIcon className="s-a-l-i"/>
+        <MailIcon className="s-a-l-i"/>
       </div>
       <div className="footer-text">Copyright ©2023. All Rights Reserved.</div>
     </>

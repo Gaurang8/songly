@@ -10,6 +10,10 @@
 .login-user{
     height: 40px;
 }
+.login-user div{
+    background-color: #101010;
+    color: #eee;
+}
 .primary-btn{
     background-color: rgb(16, 16, 16);
     color: white;
