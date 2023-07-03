@@ -36,7 +36,7 @@ function Slider({ title, data })
               <Link to={`/song/${element.id}/${element.type}`}> <img src={element?.img || img} alt="img" width="100%" /></Link>
               <p>{element?.name || "unknown"}</p>
               <p>{element?.id || "unknown"}</p>
-             {element.play && <div className="play-btn"  onClick={() => handlePlay(element.preview_url)}><PlayArrowIcon className="play-btn-icon"/></div> }
+             {element.play && <div className="play-btn"  onClick={() => handlePlay(element.play)}><PlayArrowIcon className="play-btn-icon"/></div> }
             </div>
             <audio ref={audioRef} controls style={{ display: "none" }} />
           </SwiperSlide>
