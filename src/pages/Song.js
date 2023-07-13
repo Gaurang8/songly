@@ -2,12 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
-import { fetchToken, getApiData } from "../backend/fetchapi";
+import { fetchToken, getApiData } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import img from "../logo.png";
-import SongList from "../components/slides/SongList";
 import "./song.css";
-// import { Co2Sharp } from "@mui/icons-material";
 
 function Song() {
   const { id, type } = useParams();
@@ -44,7 +42,7 @@ function Song() {
         setSongId([id]);
         console.log(songId, id);
       } else if (type === "album") {
-        const apiData = await getApiData(
+        await getApiData(
           token,
           `https://api.spotify.com/v1/albums/${id}/tracks`
         ).then((data) => {
@@ -56,7 +54,7 @@ function Song() {
           }
         });
       } else if (type === "playlist") {
-        const apiData = await getApiData(
+        await getApiData(
           token,
           `https://api.spotify.com/v1/playlists/${id}/tracks?limit=30`
         )
@@ -99,11 +97,7 @@ function Song() {
     }
   }, [songId, token]);
 
-  // useEffect (()=>{
-
-  //   renderSlide()
-
-  // },[songData])
+  
 
   const renderSlide = () => {
     const slides = [];

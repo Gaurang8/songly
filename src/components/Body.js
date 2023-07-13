@@ -6,8 +6,6 @@ import SongList from "./slides/SongList";
 import NewReleases from "./slides/NewReleases";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import "./css/body.css";
-import img from "./123.jpg"
-import   abc from  "./123.mp3"
 
 
 function Body() {
@@ -15,7 +13,7 @@ function Body() {
   const audioRef = useRef(null);
 
   const handlePlay = () => {
-      audioRef.current.src = abc;
+      audioRef.current.src = "https://p.scdn.co/mp3-preview/767976462df41e836ac0d5bccfd528376c92d2ba?cid=62b91c8cfc9f4a329c60ff1966be9d3d";      ;
       audioRef.current.play();
   };
   return (
@@ -24,10 +22,10 @@ function Body() {
       <NavBar />
       
       <div className="for-birthday">
-          <img src={img} alt="img"/>
+          <img src="https://i.scdn.co/image/ab67616d00001e02c08202c50371e234d20caf62" alt="img"/>
           <div>
-          <p className="b-text">Happy Happy Birthday </p>
-          <p className="b-text">You are one of the best things that happened to me</p>
+          <p className="b-text">Kesariya - Brahmastra </p>
+          <p className="b-text" style={{"color":"#ccc"}}>Arijit Singh</p>
           <div className="play-btn-h"  onClick={() => handlePlay()}><PlayArrowIcon className="play-btn-icon-h"/></div>
           <audio ref={audioRef} controls style={{ display: "none" }} />
           

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchToken, getApiData } from "../../backend/fetchapi";
+import { fetchToken, getApiData } from "../../api_fetch/fetchapi";
 import Slider from "../Slider";
 
 function PlaylistList({title, url}) {
@@ -24,7 +24,7 @@ function PlaylistList({title, url}) {
     const getData = () => {
         getApiData(token, url).then( apiData => {
         setPlaylistData(apiData);
-        console.log('dsds',apiData)
+        console.log('playlist',apiData)
         }).catch (err => {
         console.log("api cant fetched");
       })
@@ -45,6 +45,8 @@ function PlaylistList({title, url}) {
           item.id = element.id;
           item.name = element.name;
           item.img = element.images[0].url;
+          item.artists =  element.description ||
+          "unknown";
           item.type = "playlist";
           return item;
         });

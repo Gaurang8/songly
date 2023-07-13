@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchToken, getApiData } from "../../backend/fetchapi";
+import { fetchToken, getApiData } from "../../api_fetch/fetchapi";
 import Slider from "../Slider";
 
 function NewReleases({ title, url }) {
@@ -25,7 +25,7 @@ function NewReleases({ title, url }) {
       getApiData(token, url)
         .then((apiData) => {
           setnewRelease(apiData);
-          console.log(apiData)
+          console.log("new-release",apiData)
         })
         .catch((err) => {
           console.log("api cant fetched");
@@ -43,6 +43,8 @@ function NewReleases({ title, url }) {
           item.id = element.id;
           item.name = element.name;
           item.img = element.images[1].url;
+          item.artists =  element?.artists.map((ele) => ele.name).join(",") ||
+          "unknown"
           item.type = "album";
           return item;
         });
