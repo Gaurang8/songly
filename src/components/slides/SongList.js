@@ -1,28 +1,14 @@
 import React,{ useEffect, useState } from 'react'
-import { fetchToken, getApiData } from "../../api_fetch/fetchapi";
+import { getApiData } from "../../api_fetch/fetchapi";
 import Slider from "../Slider";
 
 function SongList({title, url}) {
-  const [token, setToken] = useState("");
   const [songData, setsongData] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const getTocken = async () => {
-      let accessToken = await fetchToken();
-      if (accessToken) {
-        setToken(accessToken);
-      }
-    };
-
-    if (token === "") {
-      getTocken();
-    }
-  }, [token]);
-
-  useEffect(() => {
     const getData = () => {
-        getApiData(token, url).then( apiData => {
+        getApiData(url).then( apiData => {
         setsongData(apiData);
         console.log("bollywood-song",apiData)
         }).catch (err => {
@@ -31,7 +17,7 @@ function SongList({title, url}) {
     };
 
     getData();
-  }, [token]);
+  }, [url]);
 
   useEffect(() => {
     const reformData = () => {

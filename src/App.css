@@ -20,6 +20,7 @@
     flex: 1 0 20%;
     min-width: 200px;
     width: 20%;
+    z-index: 10;
 }
 
 .navbar-toggle {
@@ -43,7 +44,6 @@
 @media only screen and (max-width:580px) {
     .sidebar{
         width: 70%;
-        z-index: 100;
         position: fixed;
         animation-name: fade ;
         animation-duration: 0.15s ;

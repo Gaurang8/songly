@@ -1,4 +1,3 @@
-
 const client = "62b91c8cfc9f4a329c60ff1966be9d3d";
 const secret = "a45d808d3dc24ab29859cc509c4edb2b";
 
@@ -27,19 +26,44 @@ const fetchToken = async () => {
   }
 };
 
-const getApiData = async (token, url) => {
+const getApiData = async (url) => {
+  const token = await fetchToken();
+
   try {
-    const result = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
-    const responseData = await result.json();
-    return responseData;
+    if (token) {
+      const result = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      const responseData = await result.json();
+      return responseData;
+    } else {
+      console.log("token not fetch");
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-export { fetchToken, getApiData };
+const authUser = async () => {
+  const response = await fetch("http://localhost:5001/auth", {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const result = await response.json();
+
+  if (response.ok) {
+    console.log(result.user);
+    let _result = result.user;
+    return _result;
+  } else {
+    return false;
+  }
+};
+export { fetchToken, getApiData, authUser };

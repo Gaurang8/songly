@@ -2,15 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
-import { fetchToken, getApiData } from "../api_fetch/fetchapi";
+import { getApiData } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import img from "../logo.png";
 import "./song.css";
 
 function Song() {
   const { id, type } = useParams();
-
-  const [token, setToken] = useState("");
   const [songId, setSongId] = useState([]);
   const [songData, setsongData] = useState([]);
 
@@ -24,26 +22,12 @@ function Song() {
   };
 
   useEffect(() => {
-    const getTocken = async () => {
-      let accessToken = await fetchToken();
-      if (accessToken) {
-        setToken(accessToken);
-      }
-    };
-
-    if (token === "") {
-      getTocken();
-    }
-  }, [token]);
-
-  useEffect(() => {
     const getListId = async () => {
       if (type === "song") {
         setSongId([id]);
         console.log(songId, id);
       } else if (type === "album") {
         await getApiData(
-          token,
           `https://api.spotify.com/v1/albums/${id}/tracks`
         ).then((data) => {
           if (data && data.items) {
@@ -55,7 +39,7 @@ function Song() {
         });
       } else if (type === "playlist") {
         await getApiData(
-          token,
+
           `https://api.spotify.com/v1/playlists/${id}/tracks?limit=30`
         )
           .then((data) => {
@@ -73,14 +57,14 @@ function Song() {
     };
 
     getListId();
-  }, [token]);
+  });
 
   useEffect(() => {
     const getData = async () => {
       let ids = songId.join("%2C");
       console.log("ids", ids);
       if (ids) {
-        await getApiData(token, `https://api.spotify.com/v1/tracks?ids=${ids}`)
+        await getApiData(`https://api.spotify.com/v1/tracks?ids=${ids}`)
           .then((apiData) => {
             setsongData(apiData);
             console.log("final song", apiData);
@@ -95,7 +79,7 @@ function Song() {
       console.log("getData is calling");
       getData();
     }
-  }, [songId, token]);
+  });
 
   
 

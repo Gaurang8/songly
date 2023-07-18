@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { fetchToken, getApiData } from "../../api_fetch/fetchapi";
+import { getApiData } from "../../api_fetch/fetchapi";
 import Slider from "../Slider";
 
 function NewReleases({ title, url }) {
-  const [token, setToken] = useState("");
   const [newRelease, setnewRelease] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const getTocken = async () => {
-      let accessToken = await fetchToken();
-      if (accessToken) {
-        setToken(accessToken);
-      }
-    };
-
-    if (token === "") {
-      getTocken();
-    }
-  }, [token]);
-
-  useEffect(() => {
     const getData = () => {
-      getApiData(token, url)
+      getApiData(url)
         .then((apiData) => {
           setnewRelease(apiData);
           console.log("new-release",apiData)
@@ -33,7 +19,7 @@ function NewReleases({ title, url }) {
     };
 
     getData();
-  }, [token]);
+  }, [url]);
 
   useEffect(() => {
     const reformData = () => {
