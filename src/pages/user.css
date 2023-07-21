@@ -1,0 +1,120 @@
+.user_login{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #222;
+    overflow-y: scroll;
+    z-index: 11;
+}
+.login-top-logo{
+  display: flex;
+  width: 100%;
+  position: fixed;
+  align-items: center;
+  gap: 8px;
+  height: 35px;
+  padding: 10px;
+  background-color: #222222;
+  z-index: 1;
+
+}
+.login-top-logo img{
+    filter: invert(1);
+}
+.login-top-logo h2{
+    color: white;
+}
+a {
+    color: cornflowerblue;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover{
+    color: blue;
+}
+.login-form {
+    display: block;
+    width: fit-content;
+    background-color: #2b2b2b;
+    padding: 40px 0 10px;
+    margin: 100px auto 50px;
+    border-radius: 5px;
+    box-shadow: 0px 0 2px rgba(255,255,255,0.3);
+    position: relative;
+}
+.form-logo img{
+    display: block;
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    height: 60px;
+    margin: 20px auto;
+    filter: drop-shadow(0px 0px 10px blue);
+    transform: translateY(-90px);
+}
+.form-header-text{
+    color: #ccc;
+    font-size: 2rem;
+    text-align: center;
+    margin: 10px 10px 0;
+}
+.login-form form {
+    width: fit-content;
+    padding: 10px 20px;
+}
+.login-form form fieldset {
+    border-radius: 5px;
+}
+.input-data{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 0;
+}
+
+.form-input{
+    position: relative;
+}
+._input-field{
+    padding: 7px;
+    width: 270px;
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    color: #fff;
+    background-color: transparent;
+    outline: 2px solid #fff;
+}
+.input-label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(10px,7px);
+    transform-origin: left;
+    transition: transform 0.25s;
+}
+._input-field:focus ~ .input-label,
+._input-field:valid ~ .input-label{
+    transform: translate(5px,-20px);
+    color: #d1c5fc;
+}
+._input-field:is(:focus-visible,:valid){
+    outline-color: #d1c5fc;
+}
+.form-submit-btn{
+    background-color: rgba(0,0,255,0.8);
+    border: none;
+    height: 35px;
+    border-radius: 3px;
+    color: #ddd;
+}
+.form-submit-btn:hover{
+    background-color: rgba(0,0,255,1);
+    color: #fff;
+}
+.toggle-text{
+    display: block;
+    text-align: center;
+}

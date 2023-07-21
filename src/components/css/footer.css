@@ -1,0 +1,19 @@
+.social-accounts-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-size: 30px;
+    padding: 10px;
+}
+.social-accounts-link .s-a-l-i:hover{
+    transform: scale(0.9);
+}
+.footer-text{
+    text-align: center;
+    font-family: serif;
+    padding: 10px;
+    font-size: 12px;
+    font-style: italic;
+    text-transform: capitalize;
+}

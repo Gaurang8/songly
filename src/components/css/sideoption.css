@@ -1,0 +1,20 @@
+.side_options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px;
+  font-size: 1rem;
+  height: 40px;
+}
+.side_options_icon {
+  padding-left: 5px;
+}
+.side_options_text,
+.side_options_icon {
+  color: #ddd;
+  text-decoration: none;
+}
+.side_options:hover .side_options_text,
+.side_options:hover .side_options_icon {
+  color: rgb(0, 209, 0);
+}

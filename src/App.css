@@ -1,38 +1,67 @@
-.App {
-  text-align: center;
+.main-frame{
+    display: flex;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.body{
+    background-color: rgb(48, 48, 48);
+    flex: 1 1 80%;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.sidebar {
+    background-color: #262626;
+    height: 100vh;
+    color: #ddd;
+    flex: 1 0 20%;
+    min-width: 200px;
+    width: 20%;
+    z-index: 10;
+}
+
+.navbar-toggle {
+    position: absolute;
+    right: 0;
+    top: 60%;
+    background-color: white;
+    color: black;
+    z-index: 100000;
+    padding: 10px;
+    border-radius: 20px 0 0 15px;
+    display: none;
+
   }
-}
+.navbar-toggle:active {
+   transform: scale(0.9);
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+}  
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media only screen and (max-width:580px) {
+    .sidebar{
+        width: 70%;
+        position: fixed;
+        animation-name: fade ;
+        animation-duration: 0.15s ;
+        animation-timing-function: normal;
+
+    }
+    .navbar-toggle {
+        display: block;
+      }
+
+      @keyframes fade {
+        from{
+            left: -100%;
+        }
+        to{
+            left: 0;
+        }
+        
+      }
+    
 }

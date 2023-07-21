@@ -1,0 +1,43 @@
+.bottom-rural{
+    background-color: rgba(255, 255, 255, 0.1);
+    height: 1px;
+    border: none;
+    margin-block: 70px 0;
+}
+.body-container{
+    overflow-x: hidden;
+}
+
+.for-birthday{
+    display: flex;
+    margin: 25px 15px;
+    gap: 20px;
+}
+.for-birthday img{
+    height: 150px;
+    background-color: #464646;
+    border-radius: 10px;
+}
+.b-text{
+    font-family: cursive;
+}
+.play-btn-h{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    padding: 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #000;
+}
+
+.play-btn-h:active {
+    transform: scale(0.9);
+}
+.play-btn-h:active .play-btn-icon-h {
+    color: #000;
+}
+.play-btn-icon-h{
+    width: 100% !important;
+    height: 100% !important;
+    color: #222;
+}
