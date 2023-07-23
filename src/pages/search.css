@@ -1,0 +1,32 @@
+.sec-body{
+
+    width: 100%;
+    padding: 20px 10px;
+}
+.src-result{
+     display: flex;
+     width: 100%;
+     gap: 20px;
+}
+.src-found-song{
+     display: flex;
+     width: 50%;
+     gap: 15px;
+     background-color: rgb(40, 40, 40);
+     border-radius: 8px; 
+
+}
+.src-found-song  img{
+     width: 40%;
+     aspect-ratio: 1;
+     object-fit: cover;
+     border-radius: 8px;
+     padding: 5px;
+     background-color: black;
+}
+.src-relate-song{
+
+}
+.related-artist{
+
+}

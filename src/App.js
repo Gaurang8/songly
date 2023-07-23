@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Song from "./pages/Song";
 import Login from "./pages/user";
 import { authUser } from "./api_fetch/fetchapi";
-import Table from "./pages/Table/Table";
+import Searchpage from "./pages/Searchpage";
 
 function App() {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -50,17 +50,19 @@ function App() {
       <div className="main-frame">
         <MyContext.Provider value={{isAuth , setIsAuth , user , setUser}}>
           <BrowserRouter>
-            {navbarOpen && (
-              <div className="sidebar">
+            {navbarOpen && (<>
+            <div className="sidebar">
                 <SideBar />
               </div>
+              <div className="empty-div-sbar" onClick={navbarToggle}></div></>
+
             )}
             <div className="body">
               <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/song/:id/:type" element={<Song />}></Route>
                 <Route path="/login" element={<Login />}></Route>
-                <Route path="/table" element={<Table />}></Route>
+                <Route path="/search" element={<Searchpage />}></Route>
               </Routes>
             </div>
           </BrowserRouter>
