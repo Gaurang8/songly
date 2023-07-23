@@ -66,4 +66,21 @@ const authUser = async () => {
     return false;
   }
 };
-export { fetchToken, getApiData, authUser };
+const handleSearchsong = async (searchValue) => {
+  console.log(searchValue);
+  try {
+    const apiData = await getApiData(
+      `https://api.spotify.com/v1/search?q=${searchValue.replace(
+        / +/g,
+        "+"
+      )}&type=track&limit=3`
+    );
+    console.log('data is ', apiData);
+    return apiData; 
+  } catch (err) {
+    console.log("song cant be fetched");
+    return null;
+  }
+};
+
+export { fetchToken, getApiData, authUser ,handleSearchsong };

@@ -8,6 +8,7 @@
 
 .body{
     background-color: rgb(48, 48, 48);
+    /* background-image: url('./bg.jpg'); */
     flex: 1 1 80%;
     height: 100vh;
     overflow-y: scroll;
@@ -39,6 +40,14 @@
    transform: scale(0.9);
 
 }  
+.empty-div-sbar{
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 9;
+    position: absolute;
+    display: none;
+}
 
 
 @media only screen and (max-width:580px) {
@@ -63,5 +72,8 @@
         }
         
       }
+      .empty-div-sbar{
+       display: block;  
+    }
     
 }
