@@ -1,0 +1,10 @@
+.appoint-input-field input{
+    background: white;
+    height: 40px;
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+    outline: blue 1px solid;
+    padding: 5px 40px 5px 10px;
+    font-size: 1rem;
+}
