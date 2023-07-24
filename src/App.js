@@ -9,6 +9,7 @@ import Song from "./pages/Song";
 import Login from "./pages/user";
 import { authUser } from "./api_fetch/fetchapi";
 import Searchpage from "./pages/Searchpage";
+import Appointment from "./pages/form/Appointment";
 
 function App() {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/song/:id/:type" element={<Song />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>
+                <Route path="/appointment" element={<Appointment />}></Route>
               </Routes>
             </div>
           </BrowserRouter>
