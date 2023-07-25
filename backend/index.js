@@ -30,7 +30,7 @@ mongoose
     console.log("connected to database successfully");
   })
   .catch((error) => {
-    console.log("error: ", error);
+    console.log("error regarding to database: ", error);
   });
 
 const authenticateToken = (req, res, next) => {
