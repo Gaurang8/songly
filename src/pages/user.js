@@ -18,7 +18,7 @@ function Home() {
 
     const newUser = { name, email, password };
 
-    const response = await fetch("http://localhost:5001/register", {
+    const response = await fetch("https://songly-pi.vercel.app/register", {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
@@ -51,7 +51,7 @@ function Home() {
 
     const newUser = { email, password };
 
-    const response = await fetch("http://localhost:5001/login", {
+    const response = await fetch("https://songly-pi.vercel.app/login", {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
