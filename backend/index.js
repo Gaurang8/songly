@@ -12,13 +12,17 @@ const cors = require("cors");
 
 dotenv.config();
 app.use(express.json());
-app.use(cors({ origin: "https://sonngly.vercel.app/", credentials: true }));
+app.use(cors({ origin: "https://localhost:3000/", credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.send("hello");
+  if (mongoose.connection.readyState === 1) {
+    res.send("Database connected successfully!");
+  } else {
+    res.send("Database connection failed.");
+  }
 });
 
 const url = `${process.env.MONGO_URI}song?retryWrites=true&w=majority`;
