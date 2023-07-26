@@ -16,7 +16,7 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
 
   return (
     <div className="navbar">
-      <div className="input-search">
+      <Link to="/search"><div className="input-search">
         <input
           id="search"
           type="text"
@@ -35,7 +35,7 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
             <SearchIcon />
           </IconButton>
         </button>
-      </div>
+      </div></Link>
       <button className="upgrade primary-btn">Upgrade </button>
       <button className="get-app secondary-btn">Get App</button>
       <div className="login-user">

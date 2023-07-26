@@ -48,7 +48,7 @@ const getApiData = async (url) => {
 };
 
 const authUser = async () => {
-  const response = await fetch("https://songly-pi.vercel.app/auth", {
+  const response = await fetch("http://localhost:5001/auth", {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -73,7 +73,7 @@ const handleSearchsong = async (searchValue) => {
       `https://api.spotify.com/v1/search?q=${searchValue.replace(
         / +/g,
         "+"
-      )}&type=track&limit=3`
+      )}&type=track&limit=4`
     );
     console.log('data is ', apiData);
     return apiData; 

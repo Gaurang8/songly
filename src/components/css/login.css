@@ -1,0 +1,66 @@
+.heading{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+}
+
+input{
+    border-width: 1px;
+}
+
+.login-img{
+    background-image: linear-gradient(90deg, #955DF4 0.20%, #5E61EE 100%);;
+}
+
+form{
+    width: min(calc(100% - 30px) , 400px);
+}
+
+.remember-me{
+    color: #565656;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.forgot-password{
+    color: #565656;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.signin-btn{
+    background-color: #00AE6C;;
+}
+
+.register-btn{
+    background-color:  #512DC8;;
+}
+
+.or-line{
+    background-color: black;
+    height: 1px;
+    width: 50px;
+}
+
+.or-section{
+    font-size: 1.25rem;
+}
+@media (max-width: 768px) {
+    .login-form{
+        width: 100%;
+    }
+    .login-img{
+        display: none;
+    }
+    form{
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    form{
+        min-width: calc(100% - 30px);
+    }
+}
