@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
   }
 });
 
-const url = `${process.env.MONGO_URI}song?retryWrites=true&w=majority`;
+const url = `${process.env.MONGODB_URI}song?retryWrites=true&w=majority`;
 
 console.log(url);
 mongoose

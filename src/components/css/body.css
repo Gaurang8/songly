@@ -8,16 +8,6 @@
     overflow-x: hidden;
 }
 
-.for-birthday{
-    display: flex;
-    margin: 25px 15px;
-    gap: 20px;
-}
-.for-birthday img{
-    height: 150px;
-    background-color: #464646;
-    border-radius: 10px;
-}
 .b-text{
     font-family: cursive;
 }

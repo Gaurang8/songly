@@ -1,17 +1,32 @@
 .sec-body{
-
+     box-sizing: border-box;
     width: 100%;
-    padding: 20px 10px;
+    padding: 20px;
 }
 .src-result{
      display: flex;
      width: 100%;
      gap: 20px;
 }
+.src-relate-song{
+     padding: 10px;
+     background-color: #282828;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     border-radius: 8PX;
+}
+.src-relate-song .song-item{
+     padding: 0 10px;
+}
+.src-relate-song .song-item-text{
+     align-items: center;
+}
 .src-found-song{
      display: flex;
      width: 50%;
      gap: 15px;
+     padding: 10px;
      background-color: rgb(40, 40, 40);
      border-radius: 8px; 
 
@@ -24,3 +39,22 @@
      padding: 5px;
      background-color: black;
 }
+
+
+.src-song-card{
+     display: flex;
+     gap: 20px;
+ }
+ .src-song-card p {
+     line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+ }
+.src-song-card img{
+     background-color: #464646;
+     border-radius: 10px;
+ }
+ .b-text{
+     font-family: cursive;
+ }
+ 
