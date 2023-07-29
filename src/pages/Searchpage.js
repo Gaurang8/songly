@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef , useEffect} from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { getApiData } from "../api_fetch/fetchapi";
 import "./search.css";
 import img from "../logo.png";
 import { handleSearchsong } from "../api_fetch/fetchapi";
@@ -9,6 +10,9 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 function Searchpage() {
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const [artistData , setArtistData] = useState("");
+  const [artistFormated , setArtistFormated] = useState("");
+
   const audioRef = useRef(null);
 
   const handlePlay = (previewUrl) => {
@@ -68,6 +72,47 @@ function Searchpage() {
 
     return slides;
   };
+
+  
+  useEffect(() => {
+    const getData = () => {
+      console.log(searchData.tracks.items[0].artists[0].id)
+        getApiData(`https://api.spotify.com/v1/artists/${searchData.tracks.items[0].artists[0].id}/related-artists`).then( apiData => {
+        setArtistData(apiData);
+        console.log('artist',apiData)
+        }).catch (err => {
+        console.log("api cant fetched");
+      })
+    };
+
+   if (searchData?.tracks){
+    getData();
+   }
+  }, [searchData]);
+
+  // useEffect(() => {
+  //   const reformData = () => {
+  //     if (
+  //       artistData &&
+  //       artistData.artists
+  //     ) {
+  //       const newData = artistData.artists.map((element) => {
+  //         const item = {};
+  //         item.id = element.id;
+  //         item.name = element.name;
+  //         item.img = element.images[0].url;
+  //         item.artists =  element.description ||
+  //         "unknown";
+  //         item.type = "playlist";
+  //         return item;
+  //       });
+  //       setData(newData);
+  //     }
+  //   };
+
+  //   reformData();
+  // }, []);
+
 
   return (
     <>

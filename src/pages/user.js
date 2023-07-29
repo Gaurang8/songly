@@ -18,7 +18,7 @@ function Home() {
 
     const newUser = { name, email, password };
 
-    const response = await fetch("https://songly-pi.vercel.app/register", {
+    const response = await fetch("https://songly-backend.onrender.com/register", {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
@@ -51,7 +51,7 @@ function Home() {
 
     const newUser = { email, password };
 
-    const response = await fetch("https://songly-pi.vercel.app/login", {
+    const response = await fetch("https://songly-backend.onrender.com/login", {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
