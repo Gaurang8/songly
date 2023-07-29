@@ -9,7 +9,8 @@
 .body{
     background-color: rgb(48, 48, 48);
     /* background-image: url('./bg.jpg'); */
-    flex: 1 1 80%;
+    /* flex: 1 1 80%; */
+    width: min(80%,calc(100% - 200px));
     height: 100vh;
     overflow-y: scroll;
 }
