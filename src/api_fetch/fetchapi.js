@@ -48,7 +48,7 @@ const getApiData = async (url) => {
 };
 
 const authUser = async () => {
-  const response = await fetch("http://localhost:5001/auth", {
+  const response = await fetch("https://songly-backend.onrender.com", {
     method: "GET",
     headers: {
       "content-type": "application/json",
