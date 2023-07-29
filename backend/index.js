@@ -12,6 +12,7 @@ const cors = require("cors");
 
 dotenv.config();
 app.use(express.json());
+app.use(cors({ credentials: true }));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://sonngly.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
