@@ -2,11 +2,16 @@
      box-sizing: border-box;
     width: 100%;
     padding: 70px 20px 20px;
+    overflow: hidden;
+}
+.search-heading{
+     padding: 40px 20px 20px;
 }
 .src-result{
      display: flex;
      width: 100%;
      gap: 20px;
+     flex-wrap: wrap;
 }
 .src-relate-song{
      padding: 10px;
@@ -14,6 +19,7 @@
      display: flex;
      flex-direction: column;
      gap: 10px;
+     flex: 1 0 325px;
      border-radius: 8PX;
 }
 .src-relate-song .song-item{
@@ -24,7 +30,7 @@
 }
 .src-found-song{
      display: flex;
-     width: 50%;
+     flex:1 0 350px;
      gap: 15px;
      padding: 10px;
      background-color: rgb(40, 40, 40);
@@ -33,6 +39,8 @@
 }
 .src-found-song  img{
      width: 40%;
+     max-width: 200px
+     ;
      aspect-ratio: 1;
      object-fit: cover;
      border-radius: 8px;
@@ -58,3 +66,33 @@
      font-family: cursive;
  }
  
+ .artist-card{
+     padding: 10px;
+     background:linear-gradient(to top , #232222 ,transparent);
+   }
+   .artist-img{
+     box-sizing: border-box;
+     width:100%;
+     aspect-ratio: 1;
+     border-radius: 50%;
+     background: gray;
+     overflow: hidden;
+   }
+
+   .artist-details{
+     padding-block:10px ;
+     font-size: 16px;
+     font-family: cursive;
+     text-align: center;
+   }
+   .artist-details p{
+     line-height: 24px;
+     margin: 0;
+     height: auto;
+     padding-block:7px;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+   }
+   .artist-card:hover{
+     background:linear-gradient(to top , #090909 ,transparent);
+   }

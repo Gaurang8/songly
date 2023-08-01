@@ -1,4 +1,4 @@
-import React, { useState, useRef , useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { getApiData } from "../api_fetch/fetchapi";
@@ -6,12 +6,17 @@ import "./search.css";
 import img from "../logo.png";
 import { handleSearchsong } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Keyboard } from "swiper";
+import "swiper/css/keyboard";
+import "swiper/css";
+import { Link } from "react-router-dom";
 
 function Searchpage() {
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [artistData , setArtistData] = useState("");
-  const [artistFormated , setArtistFormated] = useState("");
+  const [artistData, setArtistData] = useState("");
+  const [songArtist, setSongArtist] = useState("");
 
   const audioRef = useRef(null);
 
@@ -27,10 +32,8 @@ function Searchpage() {
     console.log(searchValue);
     setSearchData(apiData);
     console.log("search ", apiData);
-    setSearchValue('')
+    setSearchValue("");
   };
-
-  
 
   const renderRelated = () => {
     const slides = [];
@@ -73,46 +76,63 @@ function Searchpage() {
     return slides;
   };
 
-  
   useEffect(() => {
-    const getData = () => {
-      console.log(searchData.tracks.items[0].artists[0].id)
-        getApiData(`https://api.spotify.com/v1/artists/${searchData.tracks.items[0].artists[0].id}/related-artists`).then( apiData => {
-        setArtistData(apiData);
-        console.log('artist',apiData)
-        }).catch (err => {
-        console.log("api cant fetched");
-      })
+    const getartistData = async () => {
+      await getApiData(`https://api.spotify.com/v1/artists?ids=${searchData.tracks.items[0].artists.map((ele) => ele.id).join("%2C")}`).then((apiData) => { 
+        setSongArtist(apiData.artists);
+        console.log("artist", apiData)}).catch((err) => {
+          console.log("api cant fetched");
+        });
+    }
+    const getData = async () => {
+      
+     await getApiData(
+        `https://api.spotify.com/v1/artists/${searchData.tracks.items[0].artists[0].id}/related-artists`
+      )
+        .then((apiData) => {
+          setArtistData([...songArtist, ...apiData.artists])
+          console.log("artist", apiData);
+
+         console.log("finale-artist", artistData);
+
+        })
+        .catch((err) => {
+          console.log("api cant fetched 2");
+        });
     };
 
-   if (searchData?.tracks){
-    getData();
-   }
+    if (searchData?.tracks) {
+      getData();
+      getartistData();
+    }
   }, [searchData]);
 
-  // useEffect(() => {
-  //   const reformData = () => {
-  //     if (
-  //       artistData &&
-  //       artistData.artists
-  //     ) {
-  //       const newData = artistData.artists.map((element) => {
-  //         const item = {};
-  //         item.id = element.id;
-  //         item.name = element.name;
-  //         item.img = element.images[0].url;
-  //         item.artists =  element.description ||
-  //         "unknown";
-  //         item.type = "playlist";
-  //         return item;
-  //       });
-  //       setData(newData);
-  //     }
-  //   };
 
-  //   reformData();
-  // }, []);
 
+  const renderData = () => {
+    const slides = [];
+    if (artistData) {
+      if (artistData.length === 0) {
+        return <p>Loading...</p>;
+      }
+
+      
+      artistData.map((element,index) => {
+     
+        slides.push(
+          <SwiperSlide key={index}>
+            <div className="slider-item  artist-card"><div className="artist-img">
+              <Link to={`/song/${element.id}/${element.type}`}> <img src={element.images[2]?.url} alt="img" width="100%" /></Link> </div>
+             <div className="artist-details">
+              <p>{element?.name || "unknown"}</p>
+              </div>
+            
+            </div>
+          </SwiperSlide>
+        );})
+    }
+    return slides;
+  };
 
   return (
     <>
@@ -124,9 +144,8 @@ function Searchpage() {
 
       <div className="sec-body">
         <div className="src-result">
-        {searchData.tracks && (
-          <div className="src-found-song">
-            
+          {searchData.tracks && (
+            <div className="src-found-song">
               <div className="src-song-card">
                 <img
                   src={searchData.tracks.items[0].album.images[1].url}
@@ -150,12 +169,47 @@ function Searchpage() {
                   <audio ref={audioRef} controls style={{ display: "none" }} />
                 </div>
               </div>
-              </div>
-                )}
-          
+            </div>
+          )}
+     
+
           <div className="src-relate-song">{renderRelated()}</div>
         </div>
-        <div className="related-artist"></div>
+
+       <h2 className="search-heading">Related Artists</h2>
+
+        <div className="related-artist"> <Swiper
+        spaceBetween={35}
+        scrollbar={{ draggable: true }}
+        modules={[Keyboard]}
+        slidesPerView={2}
+        breakpoints={{
+          300: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          440: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+          768: {
+            slidesPerView: 5,
+          },
+          876: {
+            slidesPerView: 6,
+          },
+          1162:{
+            slidesPerView:7
+          }
+        }}
+        keyboard={{
+          enabled: true,
+        }}
+        rewind={true}
+        className="slider-container"
+      >
+        {renderData()}
+      </Swiper></div>
       </div>
       <Footer />
     </>
