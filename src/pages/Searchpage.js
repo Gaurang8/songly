@@ -122,7 +122,7 @@ function Searchpage() {
         slides.push(
           <SwiperSlide key={index}>
             <div className="slider-item  artist-card"><div className="artist-img">
-              <Link to={`/song/${element.id}/${element.type}`}> <img src={element.images[2]?.url} alt="img" width="100%" /></Link> </div>
+              <Link to={`/Playlist/${element.id}/${element.type}`}> <img src={element.images[2]?.url} alt="img" width="100%" /></Link> </div>
              <div className="artist-details">
               <p>{element?.name || "unknown"}</p>
               </div>
@@ -143,8 +143,8 @@ function Searchpage() {
       />
 
       <div className="sec-body">
-        <div className="src-result">
           {searchData.tracks && (
+        <div className="src-result">
             <div className="src-found-song">
               <div className="src-song-card">
                 <img
@@ -170,11 +170,11 @@ function Searchpage() {
                 </div>
               </div>
             </div>
-          )}
+           <div className="src-relate-song">{renderRelated()}</div>
+           </div>)}
      
 
-          <div className="src-relate-song">{renderRelated()}</div>
-        </div>
+         
 
        <h2 className="search-heading">Related Artists</h2>
 

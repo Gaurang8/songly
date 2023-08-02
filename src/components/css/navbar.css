@@ -213,4 +213,7 @@ input:not(:placeholder-shown) + .src-btn {
   .login-dialog-box {
     right: 5px;
   }
+  .secondary-btn{
+    padding: 10px 15px;
+  }
 }

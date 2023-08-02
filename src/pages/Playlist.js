@@ -1,23 +1,26 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef ,useContext} from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
+import { useParams  } from "react-router-dom";
 import { getApiData } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import img from "../logo.png";
-import "./song.css";
+import { MyContext } from "../myContext";
+import "./playlist.css";
 
 function Song() {
+  const {playingSong, setPlayingSong } = useContext(MyContext);
   const { id, type } = useParams();
   const [songId, setSongId] = useState([]);
   const [songData, setsongData] = useState([]);
 
   const audioRef = useRef(null);
 
-  const handlePlay = (previewUrl) => {
-    if (previewUrl) {
+  const handlePlay = (previewUrl , id) => {
+   if (previewUrl) {
       audioRef.current.src = previewUrl;
-      audioRef.current.play();
+      // audioRef.current.play();
+      setPlayingSong(id);
     }
   };
 
@@ -26,6 +29,7 @@ function Song() {
       if (type === "song") {
         setSongId([id]);
         console.log(songId, id);
+        return
       } else if (type === "album") {
         await getApiData(
           `https://api.spotify.com/v1/albums/${id}/tracks`
@@ -57,7 +61,7 @@ function Song() {
     };
 
     getListId();
-  });
+  },[]);
 
   useEffect(() => {
     const getData = async () => {
@@ -109,7 +113,7 @@ function Song() {
               </div>
               <div
                 className="play-btn-s"
-                onClick={() => handlePlay(element.preview_url)}
+                onClick={() => handlePlay(element.preview_url , element.id)}
               >
                 <PlayArrowIcon className="play-btn-icon-s" />
               </div>
