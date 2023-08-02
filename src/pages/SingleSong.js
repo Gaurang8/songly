@@ -31,7 +31,7 @@ const SingleSong = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime;
       if (playSong.preview_url) {
-        if (!isPlaying && audioRef.current.paused) {
+        if (!isPlaying) {
           audioRef.current.play();
           console.log("play in handle play");
         } else {
