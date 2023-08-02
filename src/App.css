@@ -22,7 +22,7 @@
     flex: 1 0 20%;
     min-width: 200px;
     width: 20%;
-    z-index: 10;
+    z-index: 100;
 }
 
 .navbar-toggle {
@@ -58,7 +58,7 @@
         animation-name: fade ;
         animation-duration: 0.15s ;
         animation-timing-function: normal;
-
+        z-index: 1000;
     }
     .navbar-toggle {
         display: block;

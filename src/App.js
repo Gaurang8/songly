@@ -5,11 +5,12 @@ import "./App.css";
 import Home from "./pages/Home";
 import { MyContext } from "./myContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Song from "./pages/Song";
+import Song from "./pages/Playlist";
 import Login from "./pages/user";
 import { authUser } from "./api_fetch/fetchapi";
 import Searchpage from "./pages/Searchpage";
 import Appointment from "./pages/form/Appointment";
+import SingleSong from "./pages/SingleSong";
 
 function App() {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -17,12 +18,16 @@ function App() {
 
   const [user, setUser] = useState({});
 
+  const [playingSong, setPlayingSong] = useState({});
+
   useEffect(() => {
     async function fetchUser() {
       const userData = await authUser();
-      console.log(userData)
-      setUser(userData);
-      setIsAuth(userData);
+      console.log(userData);
+      if (userData) {
+        setUser(userData);
+        setIsAuth(userData);
+      }
     }
     fetchUser();
   }, []);
@@ -49,22 +54,34 @@ function App() {
   return (
     <>
       <div className="main-frame">
-        <MyContext.Provider value={{isAuth , setIsAuth , user , setUser}}>
+        <MyContext.Provider
+          value={{
+            isAuth,
+            setIsAuth,
+            user,
+            setUser,
+            playingSong,
+            setPlayingSong,
+          }}
+        >
           <BrowserRouter>
-            {navbarOpen && (<>
-            <div className="sidebar">
-                <SideBar />
-              </div>
-              <div className="empty-div-sbar" onClick={navbarToggle}></div></>
-
+           {playingSong.length?(<SingleSong/>):null}
+            {navbarOpen && (
+              <>
+                <div className="sidebar">
+                  <SideBar />
+                </div>
+                <div className="empty-div-sbar" onClick={navbarToggle}></div>
+              </>
             )}
             <div className="body">
               <Routes>
                 <Route path="/" element={<Home />}></Route>
-                <Route path="/song/:id/:type" element={<Song />}></Route>
+                <Route path="/Playlist/:id/:type" element={<Song />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>
                 <Route path="/appointment" element={<Appointment />}></Route>
+                <Route path="/singlesong" element={<SingleSong />}></Route>
               </Routes>
             </div>
           </BrowserRouter>

@@ -34,7 +34,7 @@ function Slider({ title, data })
         slides.push(
           <SwiperSlide key={index}>
             <div className="slider-item">
-              <Link to={`/song/${element.id}/${element.type}`}> <img src={element?.img || img} alt="img" width="100%" /></Link>
+              <Link to={`/Playlist/${element.id}/${element.type}`}> <img src={element?.img || img} alt="img" width="100%" /></Link>
               <p>{element?.name || "unknown"}</p>
               <p>{element?.artists || "unknown"}</p>
              {element.play && <div className="play-btn"  onClick={() => handlePlay(element.play)}><PlayArrowIcon className="play-btn-icon"/></div> }
