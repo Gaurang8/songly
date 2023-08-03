@@ -4,7 +4,8 @@ import { MyContext } from "../myContext";
 import logo from "../logo.png";
 import "./user.css";
 
-function Home() {
+
+function User() {
   const {setIsAuth, setUser } = useContext(MyContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ function Home() {
 
     const newUser = { name, email, password };
 
-    const response = await fetch("https://songly-backend.onrender.com/register", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/register`, {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
@@ -31,7 +32,6 @@ function Home() {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        console.log(document.cookie);
         setIsAuth(true)
         setUser(result.user)
         setName("");
@@ -51,7 +51,7 @@ function Home() {
 
     const newUser = { email, password };
 
-    const response = await fetch("https://songly-backend.onrender.com/login", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/login`, {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
@@ -83,7 +83,7 @@ function Home() {
     <div className="user_login">
       <Link to="/"><div className="login-top-logo">
         <img src={logo} alt="logo" height={"100%"} />
-        <h2>Musicly</h2>
+        <h2>Musicly {`${process.env.REACT_APP_BACKEND_ADDR}`}</h2>
       </div></Link>
       {isLogin ? (
         <div className="login-form">
@@ -198,4 +198,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default User;

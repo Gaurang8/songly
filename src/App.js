@@ -12,6 +12,9 @@ import Searchpage from "./pages/Searchpage";
 import Appointment from "./pages/form/Appointment";
 import SingleSong from "./pages/SingleSong";
 
+// require('dotenv').config()
+
+
 function App() {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);

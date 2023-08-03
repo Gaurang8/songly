@@ -91,6 +91,13 @@ const SingleSong = () => {
     }
   }, [playingSong]);
 
+  useEffect(() => {
+    if (playSong.preview_url && audioRef.current) {
+      audioRef.current.src = playSong.preview_url;
+      handlePlay(); 
+    }
+  }, [playSong.preview_url]);
+
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
   };
@@ -104,6 +111,8 @@ const SingleSong = () => {
   const handleLoadedMetadata = () => {
     setDuration(audioRef.current.duration);
   };
+
+
 
   return (
     <>

@@ -9,22 +9,21 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
 dotenv.config();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://sonngly.vercel.app",
-    credentials: true,
-  })
-);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.BASE_ADDR);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE ,PATCH");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
 app.get("/", (req, res) => {
   if (mongoose.connection.readyState === 1) {
-    res.send("Database connected successfully!");
+    res.send(`${process.env.BASE_ADDR}`);
   } else {
     res.send("Database connection failed.");
   }
