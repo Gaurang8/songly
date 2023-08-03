@@ -1,110 +1,49 @@
-import React from "react";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import AddIcon from "@mui/icons-material/Add";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+// write a reeat js app to perform the following task as shown below 
+// 1. create two button and increment and count by one with each click
+// 2. display alert as an effect on specified condition
+// 2.1 effect should be triggeren only when page render first time
+// 2.2 effect should be triggeren every time when buttom click
+
+
+
+
+import React, {useState,useEffect } from 'react'
 import './appointment.css'
 
-function Appointment() {
+const Appointment = () => {
+   
+  const [qauntity, setQauntity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handleQauntity = (e) => {
+    setQauntity(e.target.value);
+  };
+
+  useEffect(() => {
+    alert("welcome")
+  }, []);
+
+  useEffect(() => {
+    alert(`page render ${qauntity} times`)
+  }, [qauntity]);
+
   return (
-    <>
-      <div className="appointment-fillup">
-     <div>
-     <div className="appoint-input-field">
-          <input type="text" placeholder="Customer Name" />
-        </div>
-        <div className="appoint-input-field">
-          <input type="tel" placeholder="Customer Number" />
-        </div>
-        <div className="appoint-input-field">
-          <select
-            name=""
-            id=""
-            required
-            // onChange={(e) => {
-            //   const selectedOptions = Array.from(e.target.selectedOptions);
-            //   // console.log(selectedOptions.map(option => option.value));
-            //   setFacilities(selectedOptions.map((option) => option.value));
-            // }}
-          >
-            <option value="Service-Name" selected disabled>Service Name</option>
-            <option value="spa">spa</option>
-            <option value="spa">spa</option>
-            <option value="spa">spa</option>
-            <option value="spa">spa</option>
-          </select>
-          <div className="appoint-inp-icon"><ExpandMoreOutlinedIcon/></div>
-        </div>
-        <div className="appoint-input-field">
-          <select
-            name=""
-            id=""
-            required
-            // onChange={(e) => {
-            //   const selectedOptions = Array.from(e.target.selectedOptions);
-            //   // console.log(selectedOptions.map(option => option.value));
-            //   setFacilities(selectedOptions.map((option) => option.value));
-            // }}
-          >
-            <option value="Select-duration"selected disabled>Select Duration</option>
-            <option value="">1 haur</option>
-            <option value="">2 haur</option>
-            <option value="">3 haur</option>
-            <option value="">4 haur</option>
-          </select>
-          <div className="appoint-inp-icon"><ExpandMoreOutlinedIcon/></div> 
-        <div className="appoint-input-field">
-          <select
-            name=""
-            id=""
-            required
-            // onChange={(e) => {
-            //   const selectedOptions = Array.from(e.target.selectedOptions);
-            //   // console.log(selectedOptions.map(option => option.value));
-            //   setFacilities(selectedOptions.map((option) => option.value));
-            // }}
-          >
-            <option value="staff-Name" selected disabled>Staff Name</option>
-            <option value="">sona</option>
-            <option value="">mona</option>
-            <option value="">sona</option>
-            <option value="">mona</option>
-          </select>
-          <div className="appoint-inp-icon"><ExpandMoreOutlinedIcon/></div>
-        </div>
-      </div>
-      </div>
-     <div>
-      <div className="appoint-input-field">
-        <input type="time" placeholder="Time in" />
-      </div>
-    
-      <div className="appoint-input-field">
-          <select
-            name=""
-            id=""
-            required
-            // onChange={(e) => {
-            //   const selectedOptions = Array.from(e.target.selectedOptions);
-            //   // console.log(selectedOptions.map(option => option.value));
-            //   setFacilities(selectedOptions.map((option) => option.value));
-            // }}
-          >
-            <option value="payment-mode" selected disabled>Payment Mode</option>
-            <option value="">UPI</option>
-            <option value="">Net Banking</option>
-            <option value="">Debit Card</option>
-            <option value="">Other</option>
-          </select>
-          <div className="appoint-inp-icon"><ExpandMoreOutlinedIcon/></div>
-        </div>
-        <div className="appoint-input-field">
-        <input type="number" placeholder="Membership Number" />
-        <div className="appoint-inp-icon"><AddIcon/></div>
-        </div>
-      </div>
-      </div>
-    </>
-  );
+    <div>
+      <h2>{`total Quantity : ${qauntity}`}</h2>
+      <h2>{`total Price : ${totalPrice}`}</h2>
+      <input
+        type="number"
+        value={qauntity}
+        onChange={(e) => handleQauntity(e)}
+      />
+
+      <hr/>
+
+       <button onClick={()=>setQauntity(qauntity+1)}>{`increment time ${qauntity}`}</button>
+       <button onClick={()=>setQauntity(qauntity-1)}>{`decrement time ${qauntity}`}</button>
+
+    </div>
+  )
 }
 
-export default Appointment;
+export default Appointment

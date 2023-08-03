@@ -48,7 +48,7 @@ const getApiData = async (url) => {
 };
 
 const authUser = async () => {
-  const response = await fetch("https://songly-backend.onrender.com/auth", {
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/auth`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -59,10 +59,11 @@ const authUser = async () => {
   const result = await response.json();
 
   if (response.ok) {
-    console.log(result.user);
+    console.log("user is ",result.user);
     let _result = result.user;
     return _result;
   } else {
+    console.log("error while feaching user")
     return false;
   }
 };
