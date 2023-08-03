@@ -94,7 +94,7 @@ app.post("/register", async (req, res) => {
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 7);
 
-    res.cookie("token", token, { expires: expirationDate});
+    res.cookie("token", token, { expires: expirationDate, sameSite: "None", secure: true });
 
     newUser.token = token;
     console.log(newUser);
@@ -123,7 +123,7 @@ app.post("/login" ,async (req, res) => {
        const expirationDate = new Date();
      expirationDate.setDate(expirationDate.getDate() + 7);
 
-     res.cookie("token", token, { expires: expirationDate});
+     res.cookie("token", token, { expires: expirationDate, sameSite: "None", secure: true });
 
   
       return res.status(200).json({ message: "Login successful", user });
