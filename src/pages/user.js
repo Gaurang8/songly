@@ -17,6 +17,7 @@ function User() {
   const handleSubmitReg = async (e) => {
     e.preventDefault();
 
+    console.log(process.env.REACT_APP_BACKEND_ADDR);
     const newUser = { name, email, password };
 
     const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/register`, {
