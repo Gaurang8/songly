@@ -48,6 +48,7 @@ const getApiData = async (url) => {
 };
 
 const authUser = async () => {
+  console.log("auth checking");
   const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/auth`, {
     method: "GET",
     headers: {
@@ -67,6 +68,30 @@ const authUser = async () => {
     return false;
   }
 };
+
+const handleLogout = async () => {
+  console.log("logout");
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/logout`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      console.log("logout successfully");
+    } else {
+      console.error("Logout failed");
+    }
+  } catch (error) {
+    console.error("Error while log out", error);
+  }
+};
+
+
+
 const handleSearchsong = async (searchValue) => {
   console.log(searchValue);
   try {
@@ -84,4 +109,4 @@ const handleSearchsong = async (searchValue) => {
   }
 };
 
-export { fetchToken, getApiData, authUser ,handleSearchsong };
+export { fetchToken, getApiData, authUser ,handleSearchsong , handleLogout };
