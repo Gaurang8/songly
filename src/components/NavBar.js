@@ -12,6 +12,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BadgeIcon from '@mui/icons-material/Badge';
+import { authUser, handleLogout } from "../api_fetch/fetchapi";
 
 function NavBar({ handleSearch, setSearchValue, searchValue }) {
 
@@ -59,7 +60,7 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
           <p><BadgeIcon className="login-box-icons"/><span>profile</span></p>
           <p><SettingsIcon className="login-box-icons"/><span>Setting</span></p>
           <p><HelpOutlineOutlinedIcon className="login-box-icons"/><span>Help</span></p>
-          <p>{!user.name ? (<><LoginIcon className="login-box-icons"/><Link to="/login"><span>Log in</span></Link></>):(<><LogoutIcon className="login-box-icons"/><span>Log Out</span></>)}</p>
+          <p>{user.name ? (<><LoginIcon className="login-box-icons"/><Link to="/login"><span>Log in</span></Link></>):(<><LogoutIcon className="login-box-icons"/><span onClick={()=>{handleLogout(); authUser()}}>Log Out</span></>)}</p>
           </div>
       </div>
     </div>

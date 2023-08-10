@@ -134,6 +134,11 @@ app.post("/login" ,async (req, res) => {
   }
 });
 
+app.get("/logout", async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logout successful" });
+});
+
 app.get("/auth", authenticateToken, async (req, res) => {
   const user = await User.findOne({email : req.user.email});
   res.status(201).json({user});
