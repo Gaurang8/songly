@@ -14,9 +14,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
-import { Favorite } from "@mui/icons-material";
+import { Favorite, VolumeMute } from "@mui/icons-material";
 import DragHandleIcon from '@mui/icons-material/DragHandle';
-import Equalizer from "../equilizer.gif";
 
 
 const SingleSong = () => {
@@ -31,6 +30,7 @@ const SingleSong = () => {
   const [queue, setQueue] = useState([]);
   const [offsetY, setOffsetY] = useState(0);
   const [queueIndex, setQueueIndex] = useState(1);
+  const [volume, setVolume] = useState(0.5);
 
   const handlePlay = () => {
     if (audioRef.current) {
@@ -48,16 +48,28 @@ const SingleSong = () => {
 
 
   useEffect(() => {
-
-    setPlaySong(queue[queueIndex]);
+    if (queueIndex || queueIndex === 0) {
+      setPlaySong(queue[queueIndex]);
+      console.log(playSong);
+    }
+    else {
+      console.log('not a number')
+    }
   }, [queueIndex, queue]);
 
   const handleEnded = () => {
     setIsPlaying(false);
     setIsEnded(true);
     setCurrentTime(0);
-    setQueueIndex((prevIndex) => { return (prevIndex + 1) % queue.length });
   };
+
+  useEffect(() => { 
+    if (isEnded) {
+      console.log(queueIndex);
+      setQueueIndex((prevIndex) => { return (prevIndex + 1) % queue.length });
+      console.log(queueIndex);
+    }
+  }, [isEnded]);
 
   const handlePlaying = () => {
     setIsPlaying(true);
@@ -95,8 +107,6 @@ const SingleSong = () => {
 
     if (playingSong) {
       setQueueIndex(0);
-      setQueue([]);
-      setPlaySong({});
       getData();
     }
   }, [playingSong]);
@@ -153,7 +163,7 @@ const SingleSong = () => {
                       opacity: snapshot.isDragging ? 0.5 : 1,
                     }}
                     onClick={() => {
-                      setPlayingSong(ele.id);
+                      setQueueIndex(index);
                     }}
                   >
                     <div className="single-song-queue-list-drag-icon">
@@ -203,7 +213,6 @@ const SingleSong = () => {
     const [reorderedItem] = updatedQueue.splice(result.source.index, 1);
     updatedQueue.splice(result.destination.index, 0, reorderedItem);
 
-    // setQueueIndex(result.source.index)
     const newIndex = updatedQueue.findIndex(item => item.id === playSong.id);
     console.log(newIndex)
 
@@ -231,6 +240,7 @@ const SingleSong = () => {
             ref={audioRef}
             src={playSong?.preview_url}
             controls
+            volume={volume}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             style={{ display: "none" }}
@@ -289,8 +299,21 @@ const SingleSong = () => {
           <button>
             <MoreVertIcon />
           </button>
-          <button>
-            <VolumeUpIcon />
+          <button className="volume-control-icon">
+           { volume == 0 ? <VolumeMute/> : <VolumeUpIcon />
+           }
+            <input
+              type="range"
+              class="volume-slider"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={(e) => {
+                setVolume(e.target.value);
+                audioRef.current.volume = e.target.value;
+              }}
+            />
           </button>
           <button
             onClick={(e) => {
