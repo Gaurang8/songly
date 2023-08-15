@@ -9,8 +9,8 @@ import Song from "./pages/Playlist";
 import Login from "./pages/user";
 import { authUser } from "./api_fetch/fetchapi";
 import Searchpage from "./pages/Searchpage";
-import Appointment from "./pages/form/Appointment";
 import SingleSong from "./pages/SingleSong";
+import SavedPlaylist from "./pages/SavedPlaylist";
 
 // require('dotenv').config()
 
@@ -80,11 +80,11 @@ function App() {
             <div className="body">
               <Routes>
                 <Route path="/" element={<Home />}></Route>
-                <Route path="/Playlist/:id/:type" element={<Song />}></Route>
+                <Route path="/Playlist/:id/:type" element={<Song/>}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>
-                <Route path="/appointment" element={<Appointment />}></Route>
                 <Route path="/singlesong" element={<SingleSong />}></Route>
+                <Route path="/savedplaylist/:index" element={<SavedPlaylist/>}></Route>
               </Routes>
             </div>
           </BrowserRouter>

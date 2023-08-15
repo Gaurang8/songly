@@ -79,6 +79,7 @@ app.post("/register", async (req, res) => {
       name,
       email,
       password: encryptedPassword,
+      playlists: [{ name: "default", songs: [] }],
     });
 
     await newUser.save().then(() => {
@@ -104,7 +105,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login" ,async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -120,12 +121,12 @@ app.post("/login" ,async (req, res) => {
       );
 
       console.log("token is", token);
-       const expirationDate = new Date();
-     expirationDate.setDate(expirationDate.getDate() + 7);
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
 
-     res.cookie("token", token, { expires: expirationDate, sameSite: "None", secure: true });
+      res.cookie("token", token, { expires: expirationDate, sameSite: "None", secure: true });
 
-  
+
       return res.status(200).json({ message: "Login successful", user });
     }
     return res.status(400).send("Invalid data");
@@ -140,8 +141,61 @@ app.get("/logout", async (req, res) => {
 });
 
 app.get("/auth", authenticateToken, async (req, res) => {
-  const user = await User.findOne({email : req.user.email});
-  res.status(201).json({user});
+  const user = await User.findOne({ email: req.user.email });
+  res.status(201).json({ user });
 });
+
+
+app.patch('/api/createPlaylist/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { playlistName } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.playlists.push({ name: playlistName, songs: [] , totalsong : 11 , privacy : "public" , Description : "this is descriptionb" });
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error creating playlist:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Add this endpoint after the existing routes
+app.patch('/api/addtofav/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { song } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the song is already in the favorites array
+    if (user.playlists[0].songs.includes(song)) {
+      return res.status(400).json({ message: 'Song already in favorites' });
+    }
+
+    user.playlists[0].songs.push(song);
+    await user.save().then(()=>{
+      res.status(200).json({ message: 'Song added to favorites', user });
+    });
+ 
+  } catch (error) {
+    console.error('Error adding song to favorites:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 
 app.listen(5001);

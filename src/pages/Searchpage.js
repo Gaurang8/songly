@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect ,useContext } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { getApiData } from "../api_fetch/fetchapi";
-import "./search.css";
+import "./css/search.css";
 import img from "../logo.png";
 import { handleSearchsong } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -11,8 +11,12 @@ import { Keyboard } from "swiper";
 import "swiper/css/keyboard";
 import "swiper/css";
 import { Link } from "react-router-dom";
+import { MyContext } from "../myContext";
 
 function Searchpage() {
+
+  const {playingSong, setPlayingSong } = useContext(MyContext);
+
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [artistData, setArtistData] = useState("");
@@ -20,10 +24,11 @@ function Searchpage() {
 
   const audioRef = useRef(null);
 
-  const handlePlay = (previewUrl) => {
+  const handlePlay = (previewUrl ,id) => {
     if (previewUrl) {
       audioRef.current.src = previewUrl;
-      audioRef.current.play();
+      // audioRef.current.play();
+      setPlayingSong(id);
     }
   };
 
@@ -61,7 +66,7 @@ function Searchpage() {
               </div>
               <div
                 className="play-btn-s"
-                onClick={() => handlePlay(element.preview_url)}
+                onClick={() => handlePlay(element.preview_url , element.id)}
               >
                 <PlayArrowIcon className="play-btn-icon-s" />
               </div>

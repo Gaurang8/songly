@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { getApiData } from "../api_fetch/fetchapi";
-import "./singlesong.css";
+import "./css/singlesong.css";
 import img from "../logo.png";
 import { MyContext } from "../myContext";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -14,11 +14,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
-import { Favorite, VolumeMute } from "@mui/icons-material";
+import { Favorite, FavoriteSharp, VolumeMute } from "@mui/icons-material";
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 
 
 const SingleSong = () => {
+  const { user ,setUser } = useContext(MyContext);
   const { playingSong, setPlayingSong } = useContext(MyContext);
   const audioRef = useRef(null);
   const [playSong, setPlaySong] = useState({});
@@ -45,6 +46,7 @@ const SingleSong = () => {
       }
     }
   };
+
 
 
   useEffect(() => {
@@ -139,6 +141,39 @@ const SingleSong = () => {
   };
   const handleLoadedMetadata = () => {
     setDuration(audioRef.current.duration);
+  };
+
+
+  const handleFavorite = async (song) => {
+    console.log("favorite");
+    console.log(song)
+
+    try {
+      if (song && user?._id) {
+
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ song: song }),
+        });
+
+        if (response.ok) {
+          const updatedUser = await response.json();
+          console.log(updatedUser);
+          // setUser(updatedUser);
+        } else {
+          console.error('Failed to create playlist');
+        }
+      }
+      else{
+        console.log("Please login first");
+      }
+    } catch (error) {
+      console.error('Error adding song:', error);
+    }
+
   };
 
   const renderQueue = () => {
@@ -296,8 +331,8 @@ const SingleSong = () => {
               duration
             )}`}</span>
           </div>
-          <button>
-            <MoreVertIcon />
+          <button onClick={()=>{ handleFavorite(playSong) }}>
+            <FavoriteSharp />
           </button>
           <button className="volume-control-icon">
            { volume == 0 ? <VolumeMute/> : <VolumeUpIcon />
