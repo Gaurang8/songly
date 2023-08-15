@@ -6,7 +6,7 @@ import { getApiData } from "../api_fetch/fetchapi";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import img from "../logo.png";
 import { MyContext } from "../myContext";
-import "./playlist.css";
+import "./css/playlist.css";
 
 function Song() {
   const {playingSong, setPlayingSong } = useContext(MyContext);

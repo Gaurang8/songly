@@ -18,6 +18,9 @@ const userSchema = mongoose.Schema({
     },
     token:{
         type:String
+    },
+    playlists:{
+        type:Array
     }
 },{timestamps:true});
 

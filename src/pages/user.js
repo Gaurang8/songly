@@ -2,7 +2,7 @@ import React, { useState ,useContext } from "react";
 import { useNavigate , Link } from "react-router-dom";
 import { MyContext } from "../myContext";
 import logo from "../logo.png";
-import "./user.css";
+import "./css/user.css";
 
 
 function User() {
@@ -82,9 +82,9 @@ function User() {
   };
   return (
     <div className="user_login">
-      <Link to="/"><div className="login-top-logo">
-        <img src={logo} alt="logo" height={"100%"} />
-        <h2>Musicly {`${process.env.REACT_APP_BACKEND_ADDR}`}</h2>
+      <Link to="/"> <div className="sidebar-logo">
+          <img src={logo} alt="logo" height={"100%"} />
+          <h2>Musicly</h2>
       </div></Link>
       {isLogin ? (
         <div className="login-form">

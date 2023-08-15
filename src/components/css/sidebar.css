@@ -1,6 +1,6 @@
 .sidebar-i {
-  position: fixed;
-
+  height: 100%;
+  overflow: scroll;
 }
 
 .sidebar-logo {
@@ -23,5 +23,20 @@
   padding: 15px 10px;
   margin: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+.sidebar_sub > h3 > span >button{
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1.6rem;
+} 
+.sidebar_sub > h3 > span >button:hover{
+  font-size: 1.3rem;
 }
 
