@@ -152,14 +152,18 @@ app.patch('/api/createPlaylist/:userId', async (req, res) => {
     const { playlistName } = req.body;
 
     const user = await User.findById(userId);
+    console.log(user);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.playlists.push({ name: playlistName, songs: [] , totalsong : 11 , privacy : "public" , Description : "this is descriptionb" });
+    user.playlists.push({
+      name: playlistName, songs: [], totalsong: 11, privacy: "public", Description: "this is descriptionb"
+    });
     await user.save();
 
+    console.log(user);
     res.status(200).json(user);
   } catch (error) {
     console.error('Error creating playlist:', error);
@@ -168,34 +172,32 @@ app.patch('/api/createPlaylist/:userId', async (req, res) => {
 });
 
 // Add this endpoint after the existing routes
-app.patch('/api/addtofav/:userId', async (req, res) => {
+
+app.put('/api/addtofav/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { song } = req.body;
+    const { song } = req.body; // Assuming song is a JSON object representing the song
 
+    console.log(song);
     const user = await User.findById(userId);
 
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Check if the song is already in the favorites array
-    if (user.playlists[0].songs.includes(song)) {
-      return res.status(400).json({ message: 'Song already in favorites' });
-    }
+    // Update the user's favorites with the new song
+    user.playlists[1].songs.push(song);
 
-    user.playlists[0].songs.push(song);
-    await user.save().then(()=>{
-      res.status(200).json({ message: 'Song added to favorites', user });
-    });
- 
+    const updatedUser = await user.save();
+    console.log(updatedUser);
+
+    res.status(200).json({ message: 'Song added to favorites', user: updatedUser });
   } catch (error) {
     console.error('Error adding song to favorites:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-
 
 
 app.listen(5001);
