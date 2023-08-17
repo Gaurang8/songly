@@ -731,6 +731,7 @@
 }
 
 @media screen and (max-width:578px) {
+    
     .single-song-playing {
         flex-direction: column;
         background: black;

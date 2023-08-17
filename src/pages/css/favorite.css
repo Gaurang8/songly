@@ -89,6 +89,7 @@ gap: 10px;
     padding: 20px;
     overflow: scroll;
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .playlist-information .edit-other-button{
@@ -165,4 +166,11 @@ gap: 10px;
         flex-direction: column;
         height: auto;
     }
+    .saved-playlist-songs{
+        width: 100%;
+    }
+    .playlist-information{
+        margin: auto;
+    }
+
 }
