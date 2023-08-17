@@ -147,16 +147,17 @@ const SingleSong = () => {
   const handleFavorite = async (song) => {
     console.log("favorite");
     console.log(song)
+  
 
     try {
       if (song && user?._id) {
 
         const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
-          method: 'PATCH',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ song: song }),
+          body: JSON.stringify(song),
         });
 
         if (response.ok) {
@@ -164,7 +165,7 @@ const SingleSong = () => {
           console.log(updatedUser);
           // setUser(updatedUser);
         } else {
-          console.error('Failed to create playlist');
+          console.error('Failed toadd song' , response.status, response.statusText);
         }
       }
       else{

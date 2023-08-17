@@ -50,10 +50,10 @@ function SideBar() {
         </div>
 
         <div className="sidebar_option">
-          <Link to="/">
+          <Link to="/home">
             <SideOption Icon={HomeIcon} title={"Home"} />
           </Link>
-          <Link to="/">
+          <Link to="/home">
             <SideOption Icon={FavoriteIcon} title={"Favorites"} />
           </Link>
           <Link to="/">
@@ -66,7 +66,9 @@ function SideBar() {
           {
             user?.playlists?.map((element, index) => {
               console.log(index)
-              return <SideOption title={element.name} index={index} />
+              return <>
+    <Link to = {`/savedplaylist/${index}`}>
+              <SideOption title={element.name} index={index + 1} /></Link></>
             })
           }
         </div>

@@ -79,7 +79,7 @@ function App() {
             )}
             <div className="body">
               <Routes>
-                <Route path="/" element={<Home />}></Route>
+                <Route path="/home" element={<Home />}></Route>
                 <Route path="/Playlist/:id/:type" element={<Song/>}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>

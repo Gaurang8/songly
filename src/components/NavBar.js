@@ -1,9 +1,9 @@
-import React ,{useState , useContext} from "react";
+import React, { useState, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import "./css/navbar.css";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MyContext } from "../myContext";
 
 
@@ -17,7 +17,7 @@ import { authUser, handleLogout } from "../api_fetch/fetchapi";
 function NavBar({ handleSearch, setSearchValue, searchValue }) {
 
   const { user } = useContext(MyContext);
-  const [openDialog , setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
 
 
   const handleKeyDown = (e) => {
@@ -51,17 +51,17 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
       </div></Link>
       <button className="upgrade primary-btn">Upgrade </button>
       <button className="get-app secondary-btn">Get App</button>
-      <div className="login-user" onClick = {()=>{
+      <div className="login-user" onClick={() => {
         setOpenDialog(!openDialog);
       }} >
-          <Avatar />
-        <div className={`login-dialog-box ${ openDialog ? "active": ""}`}>
-          {user.name ? (<p className="login-box-name">hey , {user.name}</p>):(<p className="login-box-name">Login</p>)}
-          <p><BadgeIcon className="login-box-icons"/><span>profile</span></p>
-          <p><SettingsIcon className="login-box-icons"/><span>Setting</span></p>
-          <p><HelpOutlineOutlinedIcon className="login-box-icons"/><span>Help</span></p>
-          <p>{user.name ? (<><LoginIcon className="login-box-icons"/><Link to="/login"><span>Log in</span></Link></>):(<><LogoutIcon className="login-box-icons"/><span onClick={()=>{handleLogout(); authUser()}}>Log Out</span></>)}</p>
-          </div>
+        <Avatar />
+        <div className={`login-dialog-box ${openDialog ? "active" : ""}`}>
+          {user.name ? (<p className="login-box-name">hey , {user.name}</p>) : (<p className="login-box-name">Login</p>)}
+          <p><BadgeIcon className="login-box-icons" /><span>profile</span></p>
+          <p><SettingsIcon className="login-box-icons" /><span>Setting</span></p>
+          <p><HelpOutlineOutlinedIcon className="login-box-icons" /><span>Help</span></p>
+          <p>{!user?.name ? (<><LoginIcon className="login-box-icons" /><Link to="/login"><span>Log in</span></Link></>) : (<><LogoutIcon className="login-box-icons" /><span onClick={() => { handleLogout(); authUser() }}>Log Out</span></>)}</p>
+        </div>
       </div>
     </div>
   );

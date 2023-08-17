@@ -20,7 +20,8 @@ const userSchema = mongoose.Schema({
         type:String
     },
     playlists:{
-        type:Array
+        type:Array,
+        default: []
     }
 },{timestamps:true});
 
