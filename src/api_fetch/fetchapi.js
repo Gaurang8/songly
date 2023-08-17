@@ -60,7 +60,7 @@ const authUser = async () => {
   const result = await response.json();
 
   if (response.ok) {
-    console.log("user is ",result.user);
+    console.log("user is ", result.user);
     let _result = result.user;
     return _result;
   } else {
@@ -102,11 +102,121 @@ const handleSearchsong = async (searchValue) => {
       )}&type=track&limit=4`
     );
     console.log('data is ', apiData);
-    return apiData; 
+    return apiData;
   } catch (err) {
     console.log("song cant be fetched");
     return null;
   }
 };
 
-export { fetchToken, getApiData, authUser ,handleSearchsong , handleLogout };
+const handleFavorite = async (songId, user) => {
+  console.log("favorite");
+  console.log(songId)
+  console.log(user)
+
+  try {
+    if (user?.favorites?.length === 0) {
+      console.log("Please create a playlist first");
+    }
+    else {
+      if (songId && user?._id) {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ songId: songId}),
+        });
+
+        if (response.ok) {
+          const updatedUser = await response.json();
+          console.log("user is iiii", updatedUser);
+          return response.status , updatedUser;
+        } else {
+          console.error('Failed toadd song', response.status, response.statusText);
+        }
+      }
+      else {
+        console.log("Please login first");
+      }
+    }
+  } catch (error) {
+    console.error('Error adding song:', error);
+  }
+
+};
+
+const removeFavorite = async (songId, user) => {
+  console.log("favorite");
+  console.log(songId)
+
+  try {
+    if (user?.favorites[0]?.songs.length === 0) {
+      console.log("Empty list");
+    }
+    else {
+      if (songId && user?._id) {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/removefromfav/${user?._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ songId: songId }),
+        });
+
+        if (response.ok) {
+          const updatedUser = await response.json();
+          console.log("user is", updatedUser);
+          return response.status , updatedUser;
+        } else {
+          console.error('Failed to remove song', response.status, response.statusText);
+        }
+      }
+      else {
+        console.log("cant get songid or userid");
+      }
+    }
+  } catch (error) {
+    console.error('Error removing song:', error);
+  }
+};
+
+
+// const handleFavorite = async (songId, user) => {
+//   console.log("favorite");
+//   console.log(songId)
+//   console.log(user)
+
+//   try {
+//     if (user?.favorites?.length === 0) {
+//       console.log("Please create a playlist first");
+//     }
+//     else {
+//       if (songId && user?._id) {
+//         const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
+//           method: 'PUT',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({ songId: songId, favotId: 1 }),
+//         });
+
+//         if (response.ok) {
+//           const updatedUser = await response.json();
+//           console.log("user is iiii", updatedUser);
+//           return response.status , updatedUser;
+//         } else {
+//           console.error('Failed toadd song', response.status, response.statusText);
+//         }
+//       }
+//       else {
+//         console.log("Please login first");
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error adding song:', error);
+//   }
+
+// };
+
+export { fetchToken, getApiData, authUser, handleSearchsong, handleLogout, handleFavorite ,removeFavorite };

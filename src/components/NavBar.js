@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import "./css/navbar.css";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { MyContext } from "../myContext";
 
 
@@ -16,15 +16,22 @@ import { authUser, handleLogout } from "../api_fetch/fetchapi";
 
 function NavBar({ handleSearch, setSearchValue, searchValue }) {
 
-  const { user } = useContext(MyContext);
+  const { user , setUser } = useContext(MyContext);
   const [openDialog, setOpenDialog] = React.useState(false);
 
+   const navigate = useNavigate();
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
+
+  const handlelogoutClick = () => {
+    handleLogout();
+    setUser([]);
+    navigate("/");
+  }
 
 
   return (
@@ -60,7 +67,7 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
           <p><BadgeIcon className="login-box-icons" /><span>profile</span></p>
           <p><SettingsIcon className="login-box-icons" /><span>Setting</span></p>
           <p><HelpOutlineOutlinedIcon className="login-box-icons" /><span>Help</span></p>
-          <p>{!user?.name ? (<><LoginIcon className="login-box-icons" /><Link to="/login"><span>Log in</span></Link></>) : (<><LogoutIcon className="login-box-icons" /><span onClick={() => { handleLogout(); authUser() }}>Log Out</span></>)}</p>
+          <p>{!user?.name ? (<><LoginIcon className="login-box-icons" /><Link to="/login"><span>Log in</span></Link></>) : (<><LogoutIcon className="login-box-icons" /><span onClick={ handlelogoutClick }><Link to="#">Log Out</Link></span></>)}</p>
         </div>
       </div>
     </div>

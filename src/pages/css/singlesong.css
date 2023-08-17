@@ -24,6 +24,12 @@
     top: 0;
 }
 
+.fav-btn-mini-player:hover {
+    color: #f64646;
+    scale: 0.95;
+    transition: all 0.2s ease-in-out;
+   
+}
 .mini-song-player .music-range-line input {
     position: absolute;
     accent-color: #f64646;
@@ -534,6 +540,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+
 }
 
 .single-song-queue-list-item {
@@ -554,7 +561,9 @@
     gap: 10px;
     box-sizing: border-box;
     border-radius: 10px;
-    background-color: #464646;
+}
+.single-song-queue-list-item:hover{
+    background-color: #363636;
 }
 
 .single-song-queue-list-drag-icon {
@@ -731,7 +740,7 @@
     }
 
     .single-song-container {
-        padding: 20px;
+        padding: 15px;
     }
 
     .single-song-queue-list {
@@ -739,11 +748,13 @@
     }
 
     .single-song-queue-list-item-info p {
-        max-width: 170px;
+        max-width: 150px;
+        font-size: 0.95rem;
     }
 
     .single-song-queue-list-item-info h4 {
-        max-width: 170px;
+        max-width: 150px;
+        font-size: 1rem;
     }
 
     .song-info-queue .single-song-queue {

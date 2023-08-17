@@ -2,9 +2,9 @@ import React from 'react'
 import './css/sideoption.css'
 import { Link } from 'react-router-dom'
 
-function SideOption({ Icon, title, index}) {
+function SideOption({ Icon, title}) {
 
-  console.log(index)
+  // console.log(index)
   console.log(title)
 
   return (
