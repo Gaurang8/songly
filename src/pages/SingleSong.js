@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import { getApiData } from "../api_fetch/fetchapi";
+import { getApiData, handleFavorite } from "../api_fetch/fetchapi";
 import "./css/singlesong.css";
 import img from "../logo.png";
 import { MyContext } from "../myContext";
@@ -17,9 +17,8 @@ import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
 import { Favorite, FavoriteSharp, VolumeMute } from "@mui/icons-material";
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 
-
 const SingleSong = () => {
-  const { user ,setUser } = useContext(MyContext);
+  const { user, setUser } = useContext(MyContext);
   const { playingSong, setPlayingSong } = useContext(MyContext);
   const audioRef = useRef(null);
   const [playSong, setPlaySong] = useState({});
@@ -47,6 +46,14 @@ const SingleSong = () => {
     }
   };
 
+  const handleFavClick = async (id, user) => {
+    const response = await handleFavorite(id, user);
+
+    console.log(response);
+    response?.user &&  setUser(response.user);
+
+
+  }
 
 
   useEffect(() => {
@@ -65,7 +72,7 @@ const SingleSong = () => {
     setCurrentTime(0);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (isEnded) {
       console.log(queueIndex);
       setQueueIndex((prevIndex) => { return (prevIndex + 1) % queue.length });
@@ -144,38 +151,7 @@ const SingleSong = () => {
   };
 
 
-  const handleFavorite = async (song) => {
-    console.log("favorite");
-    console.log(song)
-  
 
-    try {
-      if (song && user?._id) {
-
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(song),
-        });
-
-        if (response.ok) {
-          const updatedUser = await response.json();
-          console.log(updatedUser);
-          // setUser(updatedUser);
-        } else {
-          console.error('Failed toadd song' , response.status, response.statusText);
-        }
-      }
-      else{
-        console.log("Please login first");
-      }
-    } catch (error) {
-      console.error('Error adding song:', error);
-    }
-
-  };
 
   const renderQueue = () => {
     if (!queue) {
@@ -198,9 +174,7 @@ const SingleSong = () => {
                     style={{
                       opacity: snapshot.isDragging ? 0.5 : 1,
                     }}
-                    onClick={() => {
-                      setQueueIndex(index);
-                    }}
+
                   >
                     <div className="single-song-queue-list-drag-icon">
                       <div
@@ -216,7 +190,9 @@ const SingleSong = () => {
                     <div className="single-song-queue-list-item-img">
                       <img src={ele?.album?.images[2]?.url || img} alt="" />
                     </div>
-                    <div className="single-song-queue-list-item-info">
+                    <div className="single-song-queue-list-item-info" onClick={() => {
+                      setQueueIndex(index);
+                    }}>
                       <h4 className="song-name">{ele.name}</h4>
                       <p className="song-movie">
                         {ele.artists?.map((element) => element.name).join(",") ||
@@ -224,10 +200,12 @@ const SingleSong = () => {
                       </p>
                     </div>
                     <div className="single-song-queue-list-item-controls">
-                      <button>
+                      <button onClick={() => {
+                        handleFavClick(ele.id, user)
+                      }}>
                         <Favorite />
                       </button>
-                      <div className="single-song-list-item-time">00:30</div>
+                      <div className="single-song-list-item-time">{Math.floor(ele.duration_ms / 60000)}:{Math.floor((ele.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}</div>
                     </div>
                   </div>
                 </div>
@@ -332,12 +310,14 @@ const SingleSong = () => {
               duration
             )}`}</span>
           </div>
-          <button onClick={()=>{ handleFavorite(playSong) }}>
+          <button className="fav-btn-mini-player"  onClick={() => {
+            handleFavClick(playSong?.id, user)
+          }}>
             <FavoriteSharp />
           </button>
           <button className="volume-control-icon">
-           { volume == 0 ? <VolumeMute/> : <VolumeUpIcon />
-           }
+            {volume == 0 ? <VolumeMute /> : <VolumeUpIcon />
+            }
             <input
               type="range"
               class="volume-slider"
@@ -431,7 +411,7 @@ const SingleSong = () => {
                   <button onClick={() => { return }}>
                     <PlayCircleOutlineIcon />
                   </button>
-                  <button>
+                  <button >
                     <MoreVertIcon />
                   </button>
                 </div>

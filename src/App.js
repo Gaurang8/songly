@@ -11,6 +11,7 @@ import { authUser } from "./api_fetch/fetchapi";
 import Searchpage from "./pages/Searchpage";
 import SingleSong from "./pages/SingleSong";
 import SavedPlaylist from "./pages/SavedPlaylist";
+import FavoritePage from "./pages/FavoritePage";
 
 // require('dotenv').config()
 
@@ -19,7 +20,7 @@ function App() {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
 
   const [playingSong, setPlayingSong] = useState({});
 
@@ -68,7 +69,7 @@ function App() {
           }}
         >
           <BrowserRouter>
-           {playingSong.length?(<SingleSong/>):null}
+           {playingSong && playingSong.length?(<SingleSong/>):null}
             {navbarOpen && (
               <>
                 <div className="sidebar">
@@ -79,12 +80,14 @@ function App() {
             )}
             <div className="body">
               <Routes>
-                <Route path="/home" element={<Home />}></Route>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="favorite" element ={<FavoritePage/>}></Route>
                 <Route path="/Playlist/:id/:type" element={<Song/>}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>
                 <Route path="/singlesong" element={<SingleSong />}></Route>
                 <Route path="/savedplaylist/:index" element={<SavedPlaylist/>}></Route>
+
               </Routes>
             </div>
           </BrowserRouter>

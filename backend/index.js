@@ -79,7 +79,7 @@ app.post("/register", async (req, res) => {
       name,
       email,
       password: encryptedPassword,
-      playlists: [{ name: "default", songs: [] }],
+      playlists: [],
     });
 
     await newUser.save().then(() => {
@@ -159,7 +159,7 @@ app.patch('/api/createPlaylist/:userId', async (req, res) => {
     }
 
     user.playlists.push({
-      name: playlistName, songs: [], totalsong: 11, privacy: "public", Description: "this is descriptionb"
+      name: playlistName, songs: [], totalsong: 0, privacy: "public", Description: "this is description"
     });
     await user.save();
 
@@ -172,32 +172,106 @@ app.patch('/api/createPlaylist/:userId', async (req, res) => {
 });
 
 // Add this endpoint after the existing routes
-
 app.put('/api/addtofav/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { song } = req.body; // Assuming song is a JSON object representing the song
+    const { songId } = req.body; // Assuming song is a JSON object representing the song
 
-    console.log(song);
+    await console.log("song0",songId);
+
     const user = await User.findById(userId);
 
     console.log(user);
+    console.log("song1",songId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if(user.favorites[0].songs.includes(songId)){
+      return res.status(410).json({ message: 'Song already in favorites' });
+
     }
 
     // Update the user's favorites with the new song
-    user.playlists[1].songs.push(song);
-
+    user.favorites[0].songs.push(songId);
+    user.favorites[0].totalsong = user.favorites[0].songs.length;
     const updatedUser = await user.save();
-    console.log(updatedUser);
 
-    res.status(200).json({ message: 'Song added to favorites', user: updatedUser });
+    console.log(user);
+    res.status(200).json({user: updatedUser });
   } catch (error) {
     console.error('Error adding song to favorites:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+//  remove fav api/removefromfav/${user?._id
+
+app.put('/api/removefromfav/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { songId } = req.body; 
+
+    await console.log("songId",songId);
+
+    const user = await User.findById(userId);
+
+    console.log(user);
+    console.log("song1",songId);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if(! user.favorites[0].songs.includes(songId)){
+      return res.status(410).json({ message: 'Song not in favorites' });
+    }
+
+    user.favorites[0].songs = user.favorites[0].songs.filter((song) => song !== songId);
+    user.favorites[0].totalsong = user.favorites[0].songs.length;
+    const updatedUser = await user.save();
+
+    res.status(200).json({user: updatedUser });
+  } catch (error) {
+    console.error('Error removing song from favorites:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// app.put('/api/addtofav/:userId', async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const { songId ,playlistId } = req.body; // Assuming song is a JSON object representing the song
+
+//     await console.log("song0",songId);
+
+//     const user = await User.findById(userId);
+
+//     console.log(user);
+//     console.log("song1",songId);
+//     console.log("playlistId",playlistId);
+//     if (!user) {
+//       return res.status(400).json({ message: 'User not found' });
+//     }
+
+//     if(user.playlists[playlistId -1].songs.includes(songId)){
+//       return res.status(410).json({ message: 'Song already in favorites' });
+
+//     }
+
+//     // Update the user's favorites with the new song
+//     user.playlists[playlistId - 1].songs.push(songId);
+//     user.playlists[playlistId - 1].totalsong = user.playlists[playlistId - 1].songs.length;
+//     const updatedUser = await user.save();
+
+//     console.log(user);
+
+//     res.status(200).json({user: updatedUser });
+//   } catch (error) {
+//     console.error('Error adding song to favorites:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
 
 
 app.listen(5001);

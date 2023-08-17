@@ -11,7 +11,7 @@ import SideOption from "./SideOption";
 
 function SideBar() {
 
-  const { user ,setUser } = useContext(MyContext);
+  const { user, setUser } = useContext(MyContext);
 
   const createPlaylist = async () => {
     try {
@@ -22,7 +22,7 @@ function SideBar() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ playlistName: `Playlist #${user.playlists.length + 1 }` }),
+          body: JSON.stringify({ playlistName: `Playlist #${user.playlists.length + 1}` }),
         });
 
         if (response.ok) {
@@ -33,7 +33,7 @@ function SideBar() {
           console.error('Failed to create playlist');
         }
       }
-      else{
+      else {
         console.log("Please login first");
       }
     } catch (error) {
@@ -50,10 +50,10 @@ function SideBar() {
         </div>
 
         <div className="sidebar_option">
-          <Link to="/home">
+          <Link to="/">
             <SideOption Icon={HomeIcon} title={"Home"} />
           </Link>
-          <Link to="/home">
+          <Link to="/favorite">
             <SideOption Icon={FavoriteIcon} title={"Favorites"} />
           </Link>
           <Link to="/">
@@ -67,8 +67,8 @@ function SideBar() {
             user?.playlists?.map((element, index) => {
               console.log(index)
               return <>
-    <Link to = {`/savedplaylist/${index}`}>
-              <SideOption title={element.name} index={index + 1} /></Link></>
+                <Link to={`/savedplaylist/${index + 1}`}>
+                  <SideOption title={element.name} /></Link></>
             })
           }
         </div>
