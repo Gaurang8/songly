@@ -208,3 +208,11 @@ gap: 10px;
         height: auto;
     }
 }
+@media screen and (max-width : 476px) {
+
+    .dialog-editdata{
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}
