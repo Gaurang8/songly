@@ -23,6 +23,8 @@ import {
   Done,
   Favorite,
   FavoriteSharp,
+  MoreHorizOutlined,
+  MoreVert,
   PlaylistAdd,
   VolumeMute,
 } from "@mui/icons-material";
@@ -66,7 +68,7 @@ const SingleSong = () => {
   };
 
   const handleAddToPlaylist = async (id, user) => {
-    const response = await handlePlaylist(id, selectedPlaylists , user);
+    const response = await handlePlaylist(id, selectedPlaylists, user);
 
     console.log(response);
     response?.user && setUser(response.user);
@@ -372,7 +374,7 @@ const SingleSong = () => {
                   <>
                     <li
                       key={index}
-                      
+
                     >
                       <input
                         type="checkbox"
@@ -428,9 +430,8 @@ const SingleSong = () => {
         </div>
       </div>
       <div
-        className={`single-song-container ${
-          fullScreen ? "single-song-container-active" : ""
-        }`}
+        className={`single-song-container ${fullScreen ? "single-song-container-active" : ""
+          }`}
       >
         <div
           className="single-song-p-c-toggle"
@@ -443,6 +444,22 @@ const SingleSong = () => {
         <div className="single-song-playing">
           <div className="single-song-p-container">
             <img src={playSong?.album?.images[1].url || img} alt="" />
+            <button className="song-more-btn" >
+              <label htmlFor="plst-checkbox">
+                <MoreVertIcon />
+              </label>
+            </button>
+            <input type="checkbox" id="more-checkbox" style={{ display: "none" }} />
+            <div className="more-hidden-btn">
+              <button className="song-more-btn" onClick={()=>{}}>
+                <PlaylistAdd />
+              </button>
+              <button className="song-more-btn"  onClick={() => {
+              handleFavClick(playSong?.id, user);
+            }}>
+                <Favorite />
+              </button>
+            </div>
           </div>
           <div className="single-song-info-control">
             <div>
@@ -504,6 +521,7 @@ const SingleSong = () => {
               >
                 <ReplayIcon />
               </button>
+
             </div>
           </div>
         </div>

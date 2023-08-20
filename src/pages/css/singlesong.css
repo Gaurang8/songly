@@ -356,6 +356,8 @@
     padding: 20px 30px 0;
     box-sizing: border-box;
     max-width: 250px;
+    position: relative;
+
 }
 
 .single-song-playing img {
@@ -364,7 +366,41 @@
     border-radius: 10px;
     background-color: #464646;
 }
+.song-more-btn{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: rgba(0,0,0,0.4);
+    right: 35px;
+    top: 25px;
+    border-radius: 50%;
+    border: none;
+    outline: none;  
+}
+.single-song-p-container button:first-child{
+    top: 60px;
+}
+.single-song-container button:last-child{
+    top: 95px;
+}
+.more-hidden-btn{
+    display:none;
+    opacity: 0;
+}
+#more-checkbox:checked + .more-hidden-btn{
+    display: block;
+    opacity: 1;
 
+}
+
+.song-more-btn:hover{
+    background: rgba(0,0,0,0.6);
+}
+.song-more-btn svg{
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+}
 .single-song-playing .song-name {
     width: 100%;
     height: auto;
