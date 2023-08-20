@@ -66,8 +66,9 @@ function SideBar() {
           {
             user?.playlists?.map((element, index) => {
               console.log(index)
+              console.log(element._id)
               return <>
-                <Link to={`/savedplaylist/${index + 1}`}>
+                <Link to={`/savedplaylist/${element._id}`}>
                   <SideOption title={element.name} /></Link></>
             })
           }

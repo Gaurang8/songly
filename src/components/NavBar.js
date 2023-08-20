@@ -44,7 +44,7 @@ function NavBar({ handleSearch, setSearchValue, searchValue }) {
           value={searchValue}
           autoFocus
           onKeyDown={handleKeyDown}
-          class="sh-search-text"
+          className="sh-search-text"
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}

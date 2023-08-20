@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import { getApiData, handleFavorite } from "../api_fetch/fetchapi";
+import {
+  getApiData,
+  handleFavorite,
+  handlePlaylist,
+  handqlePlaylist,
+} from "../api_fetch/fetchapi";
 import "./css/singlesong.css";
 import img from "../logo.png";
 import { MyContext } from "../myContext";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
@@ -14,8 +19,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
-import { Favorite, FavoriteSharp, VolumeMute } from "@mui/icons-material";
-import DragHandleIcon from '@mui/icons-material/DragHandle';
+import {
+  Done,
+  Favorite,
+  FavoriteSharp,
+  PlaylistAdd,
+  VolumeMute,
+} from "@mui/icons-material";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
 
 const SingleSong = () => {
   const { user, setUser } = useContext(MyContext);
@@ -31,6 +42,7 @@ const SingleSong = () => {
   const [offsetY, setOffsetY] = useState(0);
   const [queueIndex, setQueueIndex] = useState(1);
   const [volume, setVolume] = useState(0.5);
+  const [selectedPlaylists, setSelectedPlaylists] = useState([]);
 
   const handlePlay = () => {
     if (audioRef.current) {
@@ -50,19 +62,23 @@ const SingleSong = () => {
     const response = await handleFavorite(id, user);
 
     console.log(response);
-    response?.user &&  setUser(response.user);
+    response?.user && setUser(response.user);
+  };
 
+  const handleAddToPlaylist = async (id, user) => {
+    const response = await handlePlaylist(id, selectedPlaylists , user);
 
-  }
-
+    console.log(response);
+    response?.user && setUser(response.user);
+    setSelectedPlaylists([]);
+  };
 
   useEffect(() => {
     if (queueIndex || queueIndex === 0) {
       setPlaySong(queue[queueIndex]);
       console.log(playSong);
-    }
-    else {
-      console.log('not a number')
+    } else {
+      console.log("not a number");
     }
   }, [queueIndex, queue]);
 
@@ -75,7 +91,9 @@ const SingleSong = () => {
   useEffect(() => {
     if (isEnded) {
       console.log(queueIndex);
-      setQueueIndex((prevIndex) => { return (prevIndex + 1) % queue.length });
+      setQueueIndex((prevIndex) => {
+        return (prevIndex + 1) % queue.length;
+      });
       console.log(queueIndex);
     }
   }, [isEnded]);
@@ -102,15 +120,19 @@ const SingleSong = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const playSongApiData = await getApiData(`https://api.spotify.com/v1/tracks/${playingSong}`);
-      const recommendationsApiData = await getApiData(`https://api.spotify.com/v1/recommendations?limit=20&seed_tracks=${playingSong}`);
+      const playSongApiData = await getApiData(
+        `https://api.spotify.com/v1/tracks/${playingSong}`
+      );
+      const recommendationsApiData = await getApiData(
+        `https://api.spotify.com/v1/recommendations?limit=20&seed_tracks=${playingSong}`
+      );
 
       console.log(playSongApiData);
       console.log(recommendationsApiData);
 
       setQueue([playSongApiData, ...recommendationsApiData.tracks]);
 
-      console.log(queue)
+      console.log(queue);
       setPlaySong(queue[0]);
     };
 
@@ -141,7 +163,10 @@ const SingleSong = () => {
     const shuffledQueue = [...queue];
     for (let i = shuffledQueue.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledQueue[i], shuffledQueue[j]] = [shuffledQueue[j], shuffledQueue[i]];
+      [shuffledQueue[i], shuffledQueue[j]] = [
+        shuffledQueue[j],
+        shuffledQueue[i],
+      ];
     }
     setQueue(shuffledQueue);
     setQueueIndex(0);
@@ -149,9 +174,6 @@ const SingleSong = () => {
   const handleLoadedMetadata = () => {
     setDuration(audioRef.current.duration);
   };
-
-
-
 
   const renderQueue = () => {
     if (!queue) {
@@ -174,13 +196,13 @@ const SingleSong = () => {
                     style={{
                       opacity: snapshot.isDragging ? 0.5 : 1,
                     }}
-
                   >
                     <div className="single-song-queue-list-drag-icon">
                       <div
                         style={{
                           cursor: "grab",
-                          transform: index === queueIndex ? "rotate(90deg)" : "none",
+                          transform:
+                            index === queueIndex ? "rotate(90deg)" : "none",
                         }}
                         {...provided.dragHandleProps}
                       >
@@ -190,22 +212,33 @@ const SingleSong = () => {
                     <div className="single-song-queue-list-item-img">
                       <img src={ele?.album?.images[2]?.url || img} alt="" />
                     </div>
-                    <div className="single-song-queue-list-item-info" onClick={() => {
-                      setQueueIndex(index);
-                    }}>
+                    <div
+                      className="single-song-queue-list-item-info"
+                      onClick={() => {
+                        setQueueIndex(index);
+                      }}
+                    >
                       <h4 className="song-name">{ele.name}</h4>
                       <p className="song-movie">
-                        {ele.artists?.map((element) => element.name).join(",") ||
-                          "unknown"}
+                        {ele.artists
+                          ?.map((element) => element.name)
+                          .join(",") || "unknown"}
                       </p>
                     </div>
                     <div className="single-song-queue-list-item-controls">
-                      <button onClick={() => {
-                        handleFavClick(ele.id, user)
-                      }}>
+                      <button
+                        onClick={() => {
+                          handleFavClick(ele.id, user);
+                        }}
+                      >
                         <Favorite />
                       </button>
-                      <div className="single-song-list-item-time">{Math.floor(ele.duration_ms / 60000)}:{Math.floor((ele.duration_ms % 60000) / 1000).toFixed(0).padStart(2, '0')}</div>
+                      <div className="single-song-list-item-time">
+                        {Math.floor(ele.duration_ms / 60000)}:
+                        {Math.floor((ele.duration_ms % 60000) / 1000)
+                          .toFixed(0)
+                          .padStart(2, "0")}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -214,12 +247,11 @@ const SingleSong = () => {
           ) : null
         )}
       </div>
-
     );
   };
 
   const handleDragEnd = (result) => {
-    console.log(result)
+    console.log(result);
     if (!result.destination) {
       return;
     }
@@ -227,18 +259,25 @@ const SingleSong = () => {
     const [reorderedItem] = updatedQueue.splice(result.source.index, 1);
     updatedQueue.splice(result.destination.index, 0, reorderedItem);
 
-    const newIndex = updatedQueue.findIndex(item => item.id === playSong.id);
-    console.log(newIndex)
+    const newIndex = updatedQueue.findIndex((item) => item.id === playSong.id);
+    console.log(newIndex);
 
     setQueueIndex(newIndex);
     setQueue(updatedQueue);
   };
 
+  const handlePlaylistSelection = (playlistId) => {
+    console.log(playlistId)
+    if (selectedPlaylists.includes(playlistId)) {
+      setSelectedPlaylists(selectedPlaylists.filter(id => id !== playlistId)); // Deselect playlist
+    } else {
+      setSelectedPlaylists([...selectedPlaylists, playlistId]); // Select playlist
+    }
+  };
+
   return (
     <>
-      <div
-        className="mini-song-player"
-      >
+      <div className="mini-song-player">
         <div className="music-range-line">
           <input
             type="range"
@@ -246,7 +285,12 @@ const SingleSong = () => {
             onInput={(e) => replySong((e.target.value * duration) / 100)}
           />
         </div>
-        <div className="playing-song" onClick={() => { setFullScreen(true) }}>
+        <div
+          className="playing-song"
+          onClick={() => {
+            setFullScreen(true);
+          }}
+        >
           <div>
             <img src={playSong?.album?.images[2].url || img} alt="" />
           </div>
@@ -281,7 +325,11 @@ const SingleSong = () => {
           <button onClick={shuffleQueue}>
             <ShuffleIcon />
           </button>
-          <button onClick={() => setQueueIndex((queueIndex - 1 + queue.length) % queue.length)}>
+          <button
+            onClick={() =>
+              setQueueIndex((queueIndex - 1 + queue.length) % queue.length)
+            }
+          >
             <SkipPreviousIcon />
           </button>
           {!isPlaying ? (
@@ -293,7 +341,9 @@ const SingleSong = () => {
               <PauseCircleIcon />
             </button>
           )}
-          <button onClick={() => setQueueIndex((queueIndex + 1) % queue.length)}>
+          <button
+            onClick={() => setQueueIndex((queueIndex + 1) % queue.length)}
+          >
             <SkipNextIcon />
           </button>
           <button
@@ -310,17 +360,54 @@ const SingleSong = () => {
               duration
             )}`}</span>
           </div>
-          <button className="fav-btn-mini-player"  onClick={() => {
-            handleFavClick(playSong?.id, user)
-          }}>
+          <button className="plst-btn-mini-player">
+            <label htmlFor="plst-checkbox">
+              <PlaylistAdd />
+            </label>
+            <input type="checkbox" id="plst-checkbox" />
+            <div className="playlist-options">
+              <div className="plst-heading">Select Playlists</div>
+              <ul>
+                {user?.playlists?.map((ele, index) => (
+                  <>
+                    <li
+                      key={index}
+                      
+                    >
+                      <input
+                        type="checkbox"
+                        id={index}
+                        checked={selectedPlaylists.includes(ele._id)}
+                        onChange={() => handlePlaylistSelection(ele._id)}
+                      />
+                      <label htmlFor={index}>{ele.name}</label>
+                    </li>
+                  </>
+                ))}
+              </ul>
+              <button
+                onClick={() => {
+                  handleAddToPlaylist(playSong?.id, user);
+                }}
+              >
+                <Done />
+                Done
+              </button>
+            </div>
+          </button>
+          <button
+            className="fav-btn-mini-player"
+            onClick={() => {
+              handleFavClick(playSong?.id, user);
+            }}
+          >
             <FavoriteSharp />
           </button>
           <button className="volume-control-icon">
-            {volume == 0 ? <VolumeMute /> : <VolumeUpIcon />
-            }
+            {volume == 0 ? <VolumeMute /> : <VolumeUpIcon />}
             <input
               type="range"
-              class="volume-slider"
+              className="volume-slider"
               min="0"
               max="1"
               step="0.01"
@@ -341,9 +428,16 @@ const SingleSong = () => {
         </div>
       </div>
       <div
-        className={`single-song-container ${fullScreen ? "single-song-container-active" : ""}`}
+        className={`single-song-container ${
+          fullScreen ? "single-song-container-active" : ""
+        }`}
       >
-        <div className="single-song-p-c-toggle" onClick={() => { setFullScreen(false) }}>
+        <div
+          className="single-song-p-c-toggle"
+          onClick={() => {
+            setFullScreen(false);
+          }}
+        >
           X
         </div>
         <div className="single-song-playing">
@@ -353,7 +447,11 @@ const SingleSong = () => {
           <div className="single-song-info-control">
             <div>
               <h4 className="song-name">{playSong?.name}</h4>
-              <p className="song-movie"> {playSong?.artists?.map((ele) => ele.name).join(",") || "unknown"}</p>
+              <p className="song-movie">
+                {" "}
+                {playSong?.artists?.map((ele) => ele.name).join(",") ||
+                  "unknown"}
+              </p>
             </div>
             <div className="playback-range-time-controll">
               <div className="playback-range-time-c-container">
@@ -364,7 +462,9 @@ const SingleSong = () => {
                   <input
                     type="range"
                     value={(currentTime * 100) / duration}
-                    onInput={(e) => replySong((e.target.value * duration) / 100)}
+                    onInput={(e) =>
+                      replySong((e.target.value * duration) / 100)
+                    }
                   />
                 </div>
                 <div className="b-p-music-time">
@@ -376,7 +476,11 @@ const SingleSong = () => {
               <button onClick={shuffleQueue}>
                 <ShuffleIcon />
               </button>
-              <button onClick={() => setQueueIndex((queueIndex - 1 + queue.length) % queue.length)}>
+              <button
+                onClick={() =>
+                  setQueueIndex((queueIndex - 1 + queue.length) % queue.length)
+                }
+              >
                 <SkipPreviousIcon />
               </button>
               {!isPlaying ? (
@@ -388,7 +492,9 @@ const SingleSong = () => {
                   <PauseCircleIcon />
                 </button>
               )}
-              <button onClick={() => setQueueIndex((queueIndex + 1) % queue.length)} >
+              <button
+                onClick={() => setQueueIndex((queueIndex + 1) % queue.length)}
+              >
                 <SkipNextIcon />
               </button>
               <button
@@ -408,10 +514,14 @@ const SingleSong = () => {
               <div className="single-song-queue-header">
                 <h4>Queue</h4>
                 <div>
-                  <button onClick={() => { return }}>
+                  <button
+                    onClick={() => {
+                      return;
+                    }}
+                  >
                     <PlayCircleOutlineIcon />
                   </button>
-                  <button >
+                  <button>
                     <MoreVertIcon />
                   </button>
                 </div>
@@ -421,7 +531,10 @@ const SingleSong = () => {
                   <DragDropContext onDragEnd={handleDragEnd}>
                     <Droppable droppableId="list" direction="vertical">
                       {(provided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                        >
                           {renderQueue()}
                           {provided.placeholder}
                         </div>
