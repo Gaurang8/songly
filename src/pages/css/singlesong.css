@@ -24,12 +24,99 @@
     top: 0;
 }
 
+
 .fav-btn-mini-player:hover {
     color: #f64646;
     scale: 0.95;
     transition: all 0.2s ease-in-out;
    
 }
+#plst-checkbox{
+    display: none;
+}
+#plst-checkbox:checked ~ .playlist-options{
+    display: block;
+}
+
+.plst-btn-mini-player {
+    position: relative;
+}
+.plst-btn-mini-player .playlist-options{
+    position: absolute;
+    bottom: 45px;
+    min-width: 150px;
+    max-height: 200px;
+    left: -60px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: none;
+    gap: 5px;
+    flex-direction: column;
+    z-index: 100;
+    color: #000;
+    overflow: scroll;
+}
+/* .plst-btn-mini-player:hover .playlist-options{
+    display: block;
+} */
+
+.plst-btn-mini-player svg:hover {
+    color: #f64646;
+    scale: 0.95;
+    transition: all 0.2s ease-in-out;
+   
+}
+.playlist-options .plst-heading{
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+    height: 35px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding: 0 10px;
+    background: #f7f7f7 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-sizing: border-box;
+    line-height: 35px;
+}
+
+.playlist-options ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+    max-height: 129px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+.playlist-options ul li{
+    font-size: 14px;
+    color: #000;
+    height: 26px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 5px;
+}
+.playlist-options ul li input{
+    margin-right: 10px;
+    width: 26px;
+}
+.playlist-options button{
+    color: #000 !important;
+    height: 35px !important;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    padding: 5px 10px;
+    width: 100% !important;
+    background: #f7f7f7 !important;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .mini-song-player .music-range-line input {
     position: absolute;
     accent-color: #f64646;
@@ -47,8 +134,10 @@
     outline: none;
     cursor: pointer;
     color: white;
-
-
+}
+.mini-song-player button svg {
+    width: 25px;
+    height: 25px;
 }
 
 .mini-song-player .playing-song {

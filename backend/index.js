@@ -159,7 +159,7 @@ app.patch('/api/createPlaylist/:userId', async (req, res) => {
     }
 
     user.playlists.push({
-      name: playlistName, songs: [], totalsong: 0, privacy: "public", Description: "this is description"
+      name: playlistName, songs: [], totalsong: 0, privacy: "public", Description: "this is description" , image :null
     });
     await user.save();
 
@@ -210,7 +210,7 @@ app.put('/api/addtofav/:userId', async (req, res) => {
 app.put('/api/removefromfav/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { songId } = req.body; 
+    const { songId  } = req.body; 
 
     await console.log("songId",songId);
 
@@ -238,40 +238,81 @@ app.put('/api/removefromfav/:userId', async (req, res) => {
 });
 
 
-// app.put('/api/addtofav/:userId', async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
-//     const { songId ,playlistId } = req.body; // Assuming song is a JSON object representing the song
+app.put('/api/addtoplaylist/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { songId, playlistIds } = req.body; 
 
-//     await console.log("song0",songId);
+    const user = await User.findById(userId);
+    console.log(playlistIds)
 
-//     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
 
-//     console.log(user);
-//     console.log("song1",songId);
-//     console.log("playlistId",playlistId);
-//     if (!user) {
-//       return res.status(400).json({ message: 'User not found' });
-//     }
+    for (const playlistId of playlistIds) {
+      const selectedPlaylist = user.playlists.find(playlist => playlist.id === playlistId);
+       console.log(selectedPlaylist)
+      if (!selectedPlaylist) {
+        console.error(`Playlist with ID ${playlistId} not found for user ${userId}`);
+        continue; 
+      }
 
-//     if(user.playlists[playlistId -1].songs.includes(songId)){
-//       return res.status(410).json({ message: 'Song already in favorites' });
+      if (selectedPlaylist.songs.includes(songId)) {
+        console.log(`Song with ID ${songId} already in playlist ${playlistId}`);
+        continue; 
+      }
 
-//     }
+      selectedPlaylist.songs.push(songId);
+      selectedPlaylist.totalsong = selectedPlaylist.songs.length;
+    }
 
-//     // Update the user's favorites with the new song
-//     user.playlists[playlistId - 1].songs.push(songId);
-//     user.playlists[playlistId - 1].totalsong = user.playlists[playlistId - 1].songs.length;
-//     const updatedUser = await user.save();
+    const updatedUser = await user.save();
 
-//     console.log(user);
+    res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    console.error('Error adding song to playlists:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
-//     res.status(200).json({user: updatedUser });
-//   } catch (error) {
-//     console.error('Error adding song to favorites:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// });
+
+app.patch('/api/editPlaylistData/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { updatedPlaylistData , playlistId} = req.body;
+
+    const user = await User.findById(userId);
+    console.log(playlistId)
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+
+    const playlistIndex = user.playlists.findIndex(
+      (playlist) => playlist._id.toString() === playlistId
+    );
+
+    if (playlistIndex === -1) {
+      return res.status(400).json({ message: 'Playlist not found' });
+    }
+
+    user.playlists[playlistIndex].name = updatedPlaylistData.name;
+    user.playlists[playlistIndex].Description = updatedPlaylistData.Description;
+    user.playlists[playlistIndex].image = updatedPlaylistData.image;
+    user.playlists[playlistIndex].privacy = updatedPlaylistData.privacy;
+
+
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 
 app.listen(5001);

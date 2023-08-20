@@ -182,41 +182,41 @@ const removeFavorite = async (songId, user) => {
 };
 
 
-// const handleFavorite = async (songId, user) => {
-//   console.log("favorite");
-//   console.log(songId)
-//   console.log(user)
+const handlePlaylist = async (songId, selectedPlaylists ,user) => {
+  console.log("favorite");
+  console.log(songId)
+  console.log(user)
 
-//   try {
-//     if (user?.favorites?.length === 0) {
-//       console.log("Please create a playlist first");
-//     }
-//     else {
-//       if (songId && user?._id) {
-//         const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtofav/${user?._id}`, {
-//           method: 'PUT',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({ songId: songId, favotId: 1 }),
-//         });
+  try {
+    if (user?.favorites?.length === 0) {
+      console.log("Please create a playlist first");
+    }
+    else {
+      if (songId && user?._id) {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDR}/api/addtoplaylist/${user?._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ songId: songId, playlistIds : selectedPlaylists }),
+        });
 
-//         if (response.ok) {
-//           const updatedUser = await response.json();
-//           console.log("user is iiii", updatedUser);
-//           return response.status , updatedUser;
-//         } else {
-//           console.error('Failed toadd song', response.status, response.statusText);
-//         }
-//       }
-//       else {
-//         console.log("Please login first");
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Error adding song:', error);
-//   }
+        if (response.ok) {
+          const updatedUser = await response.json();
+          console.log("user is iiii", updatedUser);
+          return response.status , updatedUser;
+        } else {
+          console.error('Failed toadd song', response.status, response.statusText);
+        }
+      }
+      else {
+        console.log("Please login first");
+      }
+    }
+  } catch (error) {
+    console.error('Error adding song:', error);
+  }
 
-// };
+};
 
-export { fetchToken, getApiData, authUser, handleSearchsong, handleLogout, handleFavorite ,removeFavorite };
+export { fetchToken, getApiData, authUser, handleSearchsong, handleLogout, handleFavorite ,removeFavorite ,handlePlaylist };

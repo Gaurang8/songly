@@ -86,7 +86,7 @@ function App() {
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/search" element={<Searchpage />}></Route>
                 <Route path="/singlesong" element={<SingleSong />}></Route>
-                <Route path="/savedplaylist/:index" element={<SavedPlaylist/>}></Route>
+                <Route path="/savedplaylist/:playlistId" element={<SavedPlaylist/>}></Route>
 
               </Routes>
             </div>
