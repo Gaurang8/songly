@@ -445,7 +445,7 @@ const SingleSong = () => {
           <div className="single-song-p-container">
             <img src={playSong?.album?.images[1].url || img} alt="" />
             <button className="song-more-btn" >
-              <label htmlFor="plst-checkbox">
+              <label htmlFor="more-checkbox">
                 <MoreVertIcon />
               </label>
             </button>
