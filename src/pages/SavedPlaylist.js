@@ -8,6 +8,7 @@ import "./css/savedplaylist.css";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getApiData } from "../api_fetch/fetchapi";
+import EditIcon from '@mui/icons-material/Edit';
 
 // dialog box
 import Button from "@mui/material/Button";
@@ -245,7 +246,7 @@ const SavedPlaylist = () => {
               </div>
               <div className="edit-other-button">
                 <button variant="outlined" onClick={handleClickOpen}>
-                  +
+                  <EditIcon/>
                 </button>
                 <div>
                   <Dialog open={open} onClose={handleClose}>
