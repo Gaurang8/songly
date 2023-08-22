@@ -30,6 +30,22 @@ import {
 } from "@mui/icons-material";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 300,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  borderRadius: '5px',
+};
+
 const SingleSong = () => {
   const { user, setUser } = useContext(MyContext);
   const { playingSong, setPlayingSong } = useContext(MyContext);
@@ -45,6 +61,10 @@ const SingleSong = () => {
   const [queueIndex, setQueueIndex] = useState(1);
   const [volume, setVolume] = useState(0.5);
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handlePlay = () => {
     if (audioRef.current) {
@@ -362,12 +382,19 @@ const SingleSong = () => {
               duration
             )}`}</span>
           </div>
-          <button className="plst-btn-mini-player">
+          <button className="plst-btn-mini-player" onClick={handleOpen}>
             <label htmlFor="plst-checkbox">
               <PlaylistAdd />
             </label>
             <input type="checkbox" id="plst-checkbox" />
-            <div className="playlist-options">
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+              <div className="playlist-options">
               <div className="plst-heading">Select Playlists</div>
               <ul>
                 {user?.playlists?.map((ele, index) => (
@@ -390,12 +417,15 @@ const SingleSong = () => {
               <button
                 onClick={() => {
                   handleAddToPlaylist(playSong?.id, user);
+                  handleClose();
                 }}
               >
                 <Done />
                 Done
               </button>
             </div>
+              </Box>
+            </Modal>
           </button>
           <button
             className="fav-btn-mini-player"
@@ -450,13 +480,52 @@ const SingleSong = () => {
               </label>
             </button>
             <input type="checkbox" id="more-checkbox" style={{ display: "none" }} />
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+              <div className="playlist-options">
+              <div className="plst-heading">Select Playlists</div>
+              <ul>
+                {user?.playlists?.map((ele, index) => (
+                  <>
+                    <li
+                      key={index}
+
+                    >
+                      <input
+                        type="checkbox"
+                        id={index}
+                        checked={selectedPlaylists.includes(ele._id)}
+                        onChange={() => handlePlaylistSelection(ele._id)}
+                      />
+                      <label htmlFor={index}>{ele.name}</label>
+                    </li>
+                  </>
+                ))}
+              </ul>
+              <button
+                onClick={() => {
+                  handleAddToPlaylist(playSong?.id, user);
+                  handleClose();
+                }}
+              >
+                <Done />
+                Done
+              </button>
+            </div>
+              </Box>
+            </Modal>
             <div className="more-hidden-btn">
-              <button className="song-more-btn" onClick={()=>{}}>
+              <button className="song-more-btn" onClick={handleOpen}>
                 <PlaylistAdd />
               </button>
-              <button className="song-more-btn"  onClick={() => {
-              handleFavClick(playSong?.id, user);
-            }}>
+              <button className="song-more-btn" onClick={() => {
+                handleFavClick(playSong?.id, user);
+              }}>
                 <Favorite />
               </button>
             </div>
