@@ -9,6 +9,9 @@ import { MyContext } from "../myContext";
 
 import SideOption from "./SideOption";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function SideBar() {
 
   const { user, setUser } = useContext(MyContext);
@@ -41,8 +44,41 @@ function SideBar() {
     }
   }
 
+  const handleCreatePlaylist = () => {
+   
+     if (user._id) {
+      createPlaylist();
+  }
+  else{
+    console.log("Please login first");
+    toast.error('🦄 Login to Create playlist !', {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
+}
+
+
   return (
     <>
+    <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       <div className="sidebar-i">
         <div className="sidebar-logo">
           <img src={logo} alt="logo" height={"100%"} />
@@ -62,7 +98,7 @@ function SideBar() {
         </div>
 
         <div className="sidebar_sub">
-          <h3>Playlist <span><button onClick={createPlaylist}>+</button></span></h3>
+          <h3>Playlist <span><button onClick={handleCreatePlaylist}>+</button></span></h3>
           {
             user?.playlists?.map((element, index) => {
               console.log(index)
@@ -73,7 +109,9 @@ function SideBar() {
             })
           }
         </div>
+        
       </div>
+      
     </>
   );
 }

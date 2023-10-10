@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { MyContext } from '../myContext';
 import NavBar from '../components/NavBar';
 import img from '../logo.png';
@@ -7,8 +7,8 @@ import { Favorite, PlayArrowSharp } from '@mui/icons-material';
 import './css/favorite.css'
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
 import { getApiData , removeFavorite } from '../api_fetch/fetchapi';
+import LoginIcon from '@mui/icons-material/Login';
 
 const FavoritePage = () => {
 
@@ -206,7 +206,13 @@ const FavoritePage = () => {
                 </div>
               </div>
             </>
-          ) : (<p>Login to see Favorite</p>)
+          ) : (<div><p style={{fontSize:"2rem"}}>Login to see Favorite</p>
+              <div style={{textAlign:"center"}}>
+                <Link to="/login">
+                <LoginIcon/>
+                </Link>
+              </div>
+          </div>)
         }
       </div>
     </>
